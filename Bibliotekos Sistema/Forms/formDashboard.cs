@@ -18,32 +18,32 @@ namespace Bibliotekos_Sistema.Forms
     public partial class formDashboard : Form
     {
         private readonly IDatabaseOperations _databaseOperations;
-        private readonly Account _account;
+        private readonly AccountService _accountService;
         private readonly PageLoader _pageLoader;
-        private readonly Book _book;
-        private readonly Category _category;
-        private readonly Publisher _publisher;
-        private readonly Student _student;
+        private readonly BookService _bookService;
+        private readonly CategoryService _categoryService;
+        private readonly PublisherService _publisherService;
+        private readonly StudentService _studentService;
 
         public formDashboard(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
             _databaseOperations = databaseOperations;
-            _account = new Account(_databaseOperations);
-            _book = new Book(_databaseOperations);
-            _category = new Category(_databaseOperations);
-            _publisher = new Publisher(_databaseOperations);
-            _student = new Student(_databaseOperations);
+            _accountService = new AccountService(_databaseOperations);
+            _bookService = new BookService(_databaseOperations);
+            _categoryService = new CategoryService(_databaseOperations);
+            _publisherService = new PublisherService(_databaseOperations);
+            _studentService = new StudentService(_databaseOperations);
             _pageLoader = new PageLoader();
         }
 
         private void formDashboard_Load(object sender, EventArgs e)
         {
-            lblTotalStudent.Text += _student.totalStudents();
-            lblTotalCategory.Text += _category.totalCategory();
-            lblTotalPublisher.Text += _publisher.totalPublisher();
-            lblTotalBooks.Text += _book.totalBook();
-            lblTotalAccounts.Text += _account.totalAccount();
+            lblTotalStudent.Text += _studentService.totalStudents();
+            lblTotalCategory.Text += _categoryService.totalCategory();
+            lblTotalPublisher.Text += _publisherService.totalPublisher();
+            lblTotalBooks.Text += _bookService.totalBook();
+            lblTotalAccounts.Text += _accountService.totalAccount();
         }
 
         //// NAVIGATION ////

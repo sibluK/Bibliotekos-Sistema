@@ -18,19 +18,19 @@ namespace Bibliotekos_Sistema.Forms
     public partial class formPublisher : Form
     {
         private readonly IDatabaseOperations _databaseOperations;
-        private readonly Publisher _publisher;
+        private readonly PublisherService _publisherService;
         private readonly PageLoader _pageLoader;
         public formPublisher(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
             _databaseOperations = databaseOperations;
-            _publisher = new Publisher(_databaseOperations);
+            _publisherService = new PublisherService(_databaseOperations);
             _pageLoader = new PageLoader();
         }
 
         private void formPublisher_Load(object sender, EventArgs e)
         {
-            _publisher.loadPublishersIntoTable(dgvPublisher);
+            _publisherService.loadPublishersIntoTable(dgvPublisher);
         }
 
         private void dgvPublisher_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -44,17 +44,17 @@ namespace Bibliotekos_Sistema.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            _publisher.savePublisherInfo(dgvPublisher, txtPublisherName, txtPublisherID);
+            _publisherService.savePublisherInfo(dgvPublisher, txtPublisherName, txtPublisherID);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            _publisher.editPublisherInfo(dgvPublisher, txtPublisherName, txtPublisherID);
+            _publisherService.editPublisherInfo(dgvPublisher, txtPublisherName, txtPublisherID);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            _publisher.deletePublisherInfo(dgvPublisher, txtPublisherName, txtPublisherID);
+            _publisherService.deletePublisherInfo(dgvPublisher, txtPublisherName, txtPublisherID);
         }
 
         private void btnClear_Click(object sender, EventArgs e)

@@ -17,14 +17,14 @@ namespace Bibliotekos_Sistema.Forms
     public partial class formCategory : Form
     {
         private readonly IDatabaseOperations _databaseOperations;
-        private readonly Category _category;
+        private readonly CategoryService _categoryService;
         private readonly PageLoader _pageLoader;
 
         public formCategory(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
             _databaseOperations = databaseOperations;
-            _category = new Category(_databaseOperations);
+            _categoryService = new CategoryService(_databaseOperations);
             _pageLoader = new PageLoader();
 
         }
@@ -32,7 +32,7 @@ namespace Bibliotekos_Sistema.Forms
 
         private void formCategory_Load(object sender, EventArgs e)
         {
-            _category.loadCategoriesIntoTable(dgvCategory);
+            _categoryService.loadCategoriesIntoTable(dgvCategory);
         }
 
         private void dgvCategory_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -46,17 +46,17 @@ namespace Bibliotekos_Sistema.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            _category.saveCategoryInfo(dgvCategory, txtCategoryName, txtCategoryID);
+            _categoryService.saveCategoryInfo(dgvCategory, txtCategoryName, txtCategoryID);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            _category.deleteCategoryInfo(dgvCategory, txtCategoryName, txtCategoryID);
+            _categoryService.deleteCategoryInfo(dgvCategory, txtCategoryName, txtCategoryID);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            _category.editCategoryInfo(dgvCategory, txtCategoryName, txtCategoryID);
+            _categoryService.editCategoryInfo(dgvCategory, txtCategoryName, txtCategoryID);
         }
 
         private void btnClear_Click(object sender, EventArgs e)

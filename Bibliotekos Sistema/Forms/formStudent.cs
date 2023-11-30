@@ -20,20 +20,20 @@ namespace Bibliotekos_Sistema.Forms
     public partial class formStudent : Form
     {
         private readonly IDatabaseOperations _databaseOperations;
-        private readonly Student _student;
+        private readonly StudentService _studentService;
         private readonly PageLoader _pageLoader;
 
         public formStudent(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
             _databaseOperations = databaseOperations;
-            _student = new Student(_databaseOperations);
+            _studentService = new StudentService(_databaseOperations);
             _pageLoader = new PageLoader();
         }
 
         private void formStudent_Load(object sender, EventArgs e)
         {
-            _student.loadStudentsIntoTable(dgvStudent);
+            _studentService.loadStudentsIntoTable(dgvStudent);
         }
 
         private void dgvStudent_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -52,17 +52,17 @@ namespace Bibliotekos_Sistema.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            _student.saveStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
+            _studentService.saveStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            _student.deleteStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
+            _studentService.deleteStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            _student.editStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
+            _studentService.editStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
         }
 
         private void btnClear_Click(object sender, EventArgs e)

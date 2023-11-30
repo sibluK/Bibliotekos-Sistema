@@ -18,26 +18,26 @@ namespace Bibliotekos_Sistema.Forms
     public partial class formBook : Form
     {
         private readonly IDatabaseOperations _databaseOperations;
-        private readonly Book _book;
-        private readonly Category _category;
-        private readonly Publisher _publisher;
+        private readonly BookService _bookService;
+        private readonly CategoryService _categoryService;
+        private readonly PublisherService _publisherService;
         private readonly PageLoader _pageLoader;
 
         public formBook(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
             _databaseOperations = databaseOperations;
-            _book = new Book(_databaseOperations);
-            _category = new Category(_databaseOperations);
-            _publisher = new Publisher(_databaseOperations);
+            _bookService = new BookService(_databaseOperations);
+            _categoryService = new CategoryService(_databaseOperations);
+            _publisherService = new PublisherService(_databaseOperations);
             _pageLoader = new PageLoader();
         }
 
         private void formBook_Load(object sender, EventArgs e)
         {
-            _category.loadCategoryIntoComboBox(cboCategory);
-            _publisher.loadPublisherIntoComboBox(cboPublisher);
-            _book.loadBooksIntoTable(dgvBook);
+            _categoryService.loadCategoryIntoComboBox(cboCategory);
+            _publisherService.loadPublisherIntoComboBox(cboPublisher);
+            _bookService.loadBooksIntoTable(dgvBook);
         }
 
         private void dgvBook_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -57,17 +57,17 @@ namespace Bibliotekos_Sistema.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            _book.saveBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
+            _bookService.saveBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            _book.deleteBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
+            _bookService.deleteBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            _book.editBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
+            _bookService.editBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
         }
 
         private void btnClear_Click(object sender, EventArgs e)

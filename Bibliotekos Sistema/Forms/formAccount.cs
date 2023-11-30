@@ -17,20 +17,20 @@ namespace Bibliotekos_Sistema.Forms
     public partial class formAccount : Form
     {
         private readonly IDatabaseOperations _databaseOperations;
-        private readonly Account _account;
+        private readonly AccountService _accountService;
         private readonly PageLoader _pageLoader;
 
         public formAccount(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
             _databaseOperations = databaseOperations;
-            _account = new Account(_databaseOperations);
+            _accountService = new AccountService(_databaseOperations);
             _pageLoader = new PageLoader();
         }
 
         private void formAccount_Load(object sender, EventArgs e)
         {
-            _account.loadAccountsIntoTable(dgvAccount);
+            _accountService.loadAccountsIntoTable(dgvAccount);
         }
 
 
@@ -50,17 +50,17 @@ namespace Bibliotekos_Sistema.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            _account.saveAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
+            _accountService.saveAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            _account.deleteAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
+            _accountService.deleteAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            _account.editAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
+            _accountService.editAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
         }
 
         private void btnClear_Click(object sender, EventArgs e)

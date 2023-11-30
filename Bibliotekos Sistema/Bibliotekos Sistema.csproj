@@ -47,11 +47,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Account.cs" />
+    <Compile Include="Classes\AccountService.cs" />
     <Compile Include="Classes\Book.cs" />
+    <Compile Include="Classes\BookService.cs" />
     <Compile Include="Classes\Category.cs" />
+    <Compile Include="Classes\CategoryService.cs" />
     <Compile Include="Classes\PageLoader.cs" />
     <Compile Include="Classes\Publisher.cs" />
+    <Compile Include="Classes\PublisherService.cs" />
     <Compile Include="Classes\Student.cs" />
+    <Compile Include="Classes\StudentService.cs" />
     <Compile Include="Classes\User.cs" />
     <Compile Include="Database\DBConnection.cs" />
     <Compile Include="Forms\formAccount.cs">
