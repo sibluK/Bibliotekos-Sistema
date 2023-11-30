@@ -97,14 +97,8 @@ namespace Bibliotekos_Sistema.Classes
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
 
-            if (cboUserType.Text == "Administratorius")
-            {
-                userType = 1;
-            }
-            else
-            {
-                userType = 0;
-            }
+            userType = cboUserType.Text == "Administratorius" ? 1 : 0;
+
 
             try
             {

@@ -15,7 +15,7 @@ using Bibliotekos_Sistema.Interfaces;
 
 namespace Bibliotekos_Sistema.Forms
 {
-    public partial class fromSignup : Form
+    public partial class formSignup : Form
     {
         Font SmallFont = new Font("Microsoft Sans Serif", 8);
         Font MediumFont = new Font("Microsoft Sans Serif", 12);
@@ -24,12 +24,14 @@ namespace Bibliotekos_Sistema.Forms
 
         private readonly IDatabaseOperations _databaseOperations;
         private readonly PageLoader _pageLoader;
+        private readonly UserService _userService;
 
-        public fromSignup(IDatabaseOperations databaseOperations)
+        public formSignup(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
             _pageLoader = new PageLoader();
             _databaseOperations = databaseOperations;
+            _userService = new UserService(_databaseOperations);
             passwordCheckBox.Font = SmallFont;
             passwordCheckBox2.Font = SmallFont;
         }
@@ -66,7 +68,7 @@ namespace Bibliotekos_Sistema.Forms
 
         private void btnSingup_Click(object sender, EventArgs e)
         {
-            User user = new User(cboUserType, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboDesignation);
+            _userService.insertUserIntoDatabase(cboUserType, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboDesignation);
         }
 
         private void fromSignup_Load(object sender, EventArgs e)

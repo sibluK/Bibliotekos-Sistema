@@ -34,12 +34,12 @@ namespace Bibliotekos_Sistema.Classes
         }
         public void loadLoginPage()
         {
-            Login login = new Login(databaseOperations);
+            formLogin login = new formLogin(databaseOperations);
             login.Show();
         }
         public void loadSignupPage()
         {
-            fromSignup signup = new fromSignup(databaseOperations);
+            formSignup signup = new formSignup(databaseOperations);
             signup.Show();
         }
         public void loadDashboardPage()

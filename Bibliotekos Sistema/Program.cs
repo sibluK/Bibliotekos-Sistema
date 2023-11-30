@@ -20,7 +20,7 @@ namespace Bibliotekos_Sistema
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login(_databaseOperations));
+            Application.Run(new formLogin(_databaseOperations));
         }
     }
 }
