@@ -1,4 +1,6 @@
 ﻿using Bibliotekos_Sistema.Classes;
+using Bibliotekos_Sistema.Database;
+using Bibliotekos_Sistema.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,27 +16,21 @@ namespace Bibliotekos_Sistema.Forms
 {
     public partial class formAccount : Form
     {
-        User User = new User();
-        Account Account = new Account();
-        Book Book = new Book();
-        Category Category = new Category();
-        Publisher Publisher = new Publisher();
-        Student Student = new Student();
+        private readonly IDatabaseOperations _databaseOperations;
+        private readonly Account _account;
+        private readonly PageLoader _pageLoader;
 
-
-        public formAccount()
+        public formAccount(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
-        }
-        public void loadAccountPage()
-        {
-            formAccount account = new formAccount();
-            account.Show();
+            _databaseOperations = databaseOperations;
+            _account = new Account(_databaseOperations);
+            _pageLoader = new PageLoader();
         }
 
         private void formAccount_Load(object sender, EventArgs e)
         {
-            Account.loadAccountsIntoTable(dgvAccount);
+            _account.loadAccountsIntoTable(dgvAccount);
         }
 
 
@@ -54,17 +50,17 @@ namespace Bibliotekos_Sistema.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Account.saveAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
+            _account.saveAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            Account.deleteAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
+            _account.deleteAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            Account.editAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
+            _account.editAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -105,39 +101,37 @@ namespace Bibliotekos_Sistema.Forms
         //// NAVIGATION ////
         private void btnHome_Click(object sender, EventArgs e)
         {
-            formDashboard home = new formDashboard();
-            home.Show();
+            _pageLoader.loadDashboardPage();
             this.Dispose();
         }
 
         private void btnBook_Click(object sender, EventArgs e)
         {
-            Book.loadBookPage();
+            _pageLoader.loadBookPage();
             this.Dispose();
         }
 
         private void btnStudent_Click(object sender, EventArgs e)
         {
-            Student.loadStudentPage();
+            _pageLoader.loadStudentPage();
             this.Dispose();
         }
 
         private void btnCategory_Click(object sender, EventArgs e)
         {
-            Category.loadCategoryPage();
+            _pageLoader.loadCategoryPage();
             this.Dispose();
         }
 
         private void btnPublisher_Click(object sender, EventArgs e)
         {
-            Publisher.loadPublisherPage();
+            _pageLoader.loadPublisherPage();
             this.Dispose();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            Login login = new Login();
-            login.Show();
+            _pageLoader.loadLoginPage();
             this.Dispose();
         }
 

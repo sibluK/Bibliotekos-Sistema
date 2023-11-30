@@ -10,27 +10,34 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using Bibliotekos_Sistema.Database;
 using Bibliotekos_Sistema.Classes;
+using Bibliotekos_Sistema.Interfaces;
+using System.Security.Principal;
 
 namespace Bibliotekos_Sistema.Forms
 {
     public partial class formBook : Form
     {
-        Book Book = new Book();
-        Category Category = new Category();
-        Publisher Publisher = new Publisher();
-        Student Student = new Student();
-        Account Account = new Account();
+        private readonly IDatabaseOperations _databaseOperations;
+        private readonly Book _book;
+        private readonly Category _category;
+        private readonly Publisher _publisher;
+        private readonly PageLoader _pageLoader;
 
-        public formBook()
+        public formBook(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
+            _databaseOperations = databaseOperations;
+            _book = new Book(_databaseOperations);
+            _category = new Category(_databaseOperations);
+            _publisher = new Publisher(_databaseOperations);
+            _pageLoader = new PageLoader();
         }
 
         private void formBook_Load(object sender, EventArgs e)
         {
-            Category.loadCategoryIntoComboBox(cboCategory);
-            Publisher.loadPublisherIntoComboBox(cboPublisher);
-            Book.loadBooksIntoTable(dgvBook);
+            _category.loadCategoryIntoComboBox(cboCategory);
+            _publisher.loadPublisherIntoComboBox(cboPublisher);
+            _book.loadBooksIntoTable(dgvBook);
         }
 
         private void dgvBook_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -50,17 +57,17 @@ namespace Bibliotekos_Sistema.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Book.saveBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
+            _book.saveBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            Book.deleteBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
+            _book.deleteBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            Book.editBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
+            _book.editBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -77,39 +84,37 @@ namespace Bibliotekos_Sistema.Forms
         //// NAVIGATION ////
         private void btnHome_Click(object sender, EventArgs e)
         {
-            formDashboard home = new formDashboard();
-            home.Show();
+            _pageLoader.loadDashboardPage();
             this.Dispose();
         }
 
         private void btnStudent_Click(object sender, EventArgs e)
         {
-            Student.loadStudentPage();
+            _pageLoader.loadStudentPage();
             this.Dispose();
         }
 
         private void btnCategory_Click(object sender, EventArgs e)
         {
-            Category.loadCategoryPage();
+            _pageLoader.loadCategoryPage();
             this.Dispose();
         }
 
         private void btnPublisher_Click(object sender, EventArgs e)
         {
-            Publisher.loadPublisherPage();
+            _pageLoader.loadPublisherPage();
             this.Dispose();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            Login login = new Login();
-            login.Show();
+            _pageLoader.loadLoginPage();
             this.Dispose();
         }
 
         private void btnAccount_Click(object sender, EventArgs e)
         {
-            Account.loadAccountPage();
+            _pageLoader.loadAccountPage();
             this.Dispose();
         }
     }

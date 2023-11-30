@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bibliotekos_Sistema.Database;
 using System.Collections.Specialized;
+using Bibliotekos_Sistema.Interfaces;
 
 namespace Bibliotekos_Sistema.Classes
 {
-    internal class User
+    public class User
     {
-        private DBConnection _connection = new DBConnection();
-        private SqlCommand _command = new SqlCommand();
+        private readonly IDatabaseOperations _databaseOperations;
+        private readonly SqlCommand _command;
         private string sql;
 
         public int userType;
@@ -23,10 +24,14 @@ namespace Bibliotekos_Sistema.Classes
         public string Password;
         public string Designation;
 
-        public User() { }
+        public User(IDatabaseOperations databaseOperations)
+        {
+            _databaseOperations = databaseOperations;
+            _command = new SqlCommand();    
+        }
         public User(ComboBox cboUserType, TextBox txtUsername, TextBox txtFullName, TextBox txtPassword, TextBox txtPasswordConfirm, ComboBox cboDesignation)
         {
-            
+
             Username = txtUsername.Text;
             FullName = txtFullName.Text;
             Password = txtPassword.Text;
@@ -49,8 +54,9 @@ namespace Bibliotekos_Sistema.Classes
         {
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     if (txtUsername.Text.Length == 0
                         || txtFullName.Text.Length == 0
@@ -73,7 +79,7 @@ namespace Bibliotekos_Sistema.Classes
                     {
                         sql = $"INSERT INTO tblStaff(FullName,Username,SPassword,is_Admin,Designation)" +
                               $" VALUES('{txtFullName.Text}','{txtUsername.Text}','{txtPassword.Text}','{userType}','{cboDesignation.Text}')";
-                        _command.Connection = _connection.connection();
+                        _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
@@ -95,7 +101,6 @@ namespace Bibliotekos_Sistema.Classes
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.ToString());
-                // MessageBox.Show("Įvestas naudotojo vardas jau egzistuoja");
             }
             catch (Exception ex)
             {
@@ -103,60 +108,8 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
-
-
-        public void loadUser(string username, string password)
-        {
-            //gauti naudotojo duomenis is duomenu bazes pagal jo username ir password ir priskirti jas naudotojui
-
-            SqlDataReader DR;
-
-            try
-            {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
-                {
-                    sql = $"SELECT * FROM tblStaff WHERE Username='{username}' AND SPassword='{password}'";
-                    _command.Connection = _connection.connection();
-                    _command.CommandText = sql;
-                    DR = _command.ExecuteReader();
-                    while (DR.Read())
-                    {
-                        userType = DR.GetInt32(4);
-                        Username = DR.GetString(2);
-                        FullName = DR.GetString(1);
-                        Password = DR.GetString(3);
-                        Designation = DR.GetString(5);
-                    }
-                    DR.Close();
-                }
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                _connection.connection().Close();
-            }
-        }
-
-
-        public bool IsAdmin()
-        {
-            if (userType == 1)
-            {
-                return true;
-            }
-            else { return false; }
-        }
-
     }
 }

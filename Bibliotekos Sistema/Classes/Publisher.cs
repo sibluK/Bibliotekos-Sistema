@@ -1,8 +1,10 @@
 ﻿using Bibliotekos_Sistema.Database;
 using Bibliotekos_Sistema.Forms;
+using Bibliotekos_Sistema.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -11,27 +13,30 @@ using System.Windows.Forms;
 
 namespace Bibliotekos_Sistema.Classes
 {
-    internal class Publisher
+    public class Publisher
     {
-        SqlCommand _command = new SqlCommand();
+        private readonly SqlCommand _command;
         private string sql;
-        DBConnection _connection = new DBConnection();
-        public void loadPublisherPage()
+        private readonly IDatabaseOperations _databaseOperations;
+
+        public Publisher(IDatabaseOperations databaseOperations)
         {
-            formPublisher publisher = new formPublisher();
-            publisher.Show();
+            _databaseOperations = databaseOperations;
+            _command = new SqlCommand(); 
         }
+
         public int totalPublisher()
         {
             SqlDataReader DR;
             int counter = 0;
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = "SELECT * FROM tblBindingDetail";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DR = _command.ExecuteReader();
                     while (DR.Read())
@@ -51,7 +56,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
 
             return counter;
@@ -62,11 +67,12 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = "SELECT * FROM tblBindingDetail";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DR = _command.ExecuteReader();
                     while (DR.Read())
@@ -86,7 +92,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
 
@@ -96,11 +102,12 @@ namespace Bibliotekos_Sistema.Classes
             DataTable DT = new DataTable();
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = "SELECT * FROM tblBindingDetail";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DA.SelectCommand = _command;
                     DA.Fill(DT);
@@ -117,7 +124,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
 
@@ -128,8 +135,9 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     if (txtPublisherName.Text.Length == 0)
                     {
@@ -139,7 +147,7 @@ namespace Bibliotekos_Sistema.Classes
                     {
                         sql = $"INSERT INTO tblBindingDetail(Binding_Name)" +
                               $"VALUES('{txtPublisherName.Text}')";
-                        _command.Connection = _connection.connection();
+                        _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
@@ -169,7 +177,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
 
@@ -180,8 +188,9 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
 
                     if (txtPublisherName.Text.Length == 0 || txtPublisherID.Text.Length == 0)
@@ -191,7 +200,7 @@ namespace Bibliotekos_Sistema.Classes
                     else
                     {
                         sql = $"UPDATE tblBindingDetail SET Binding_Name='{txtPublisherName.Text}' WHERE Binding_ID='{int.Parse(txtPublisherID.Text)}'";
-                        _command.Connection = _connection.connection();
+                        _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
@@ -209,9 +218,6 @@ namespace Bibliotekos_Sistema.Classes
                             MessageBox.Show("Nepavyko atnaujinti leidėjo!");
                         }
                     }
-
-
-
                 }
             }
             catch (SqlException ex)
@@ -224,7 +230,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
 
@@ -235,8 +241,9 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     if (txtPublisherName.Text.Length == 0)
                     {
@@ -245,7 +252,7 @@ namespace Bibliotekos_Sistema.Classes
                     else
                     {
                         sql = $"DELETE FROM tblBindingDetail WHERE Binding_ID='{int.Parse(txtPublisherID.Text)}'";
-                        _command.Connection = _connection.connection();
+                        _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
@@ -275,7 +282,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
 

@@ -12,25 +12,28 @@ using Bibliotekos_Sistema.Database;
 using System.Drawing.Text;
 using System.Runtime.CompilerServices;
 using Bibliotekos_Sistema.Classes;
+using Bibliotekos_Sistema.Interfaces;
+using System.Security.Principal;
 
 namespace Bibliotekos_Sistema.Forms
 {
     public partial class formStudent : Form
     {
-        Book Book = new Book();
-        Category Category = new Category();
-        Publisher Publisher = new Publisher();
-        Student Student = new Student();
-        Account Account = new Account();
+        private readonly IDatabaseOperations _databaseOperations;
+        private readonly Student _student;
+        private readonly PageLoader _pageLoader;
 
-        public formStudent()
+        public formStudent(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
+            _databaseOperations = databaseOperations;
+            _student = new Student(_databaseOperations);
+            _pageLoader = new PageLoader();
         }
 
         private void formStudent_Load(object sender, EventArgs e)
         {
-            Student.loadStudentsIntoTable(dgvStudent);
+            _student.loadStudentsIntoTable(dgvStudent);
         }
 
         private void dgvStudent_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -49,17 +52,17 @@ namespace Bibliotekos_Sistema.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Student.saveStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
+            _student.saveStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            Student.deleteStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
+            _student.deleteStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            Student.editStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
+            _student.editStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -75,39 +78,37 @@ namespace Bibliotekos_Sistema.Forms
         //// NAVIGATION ////
         private void btnHome_Click_1(object sender, EventArgs e)
         {
-            formDashboard home = new formDashboard();
-            home.Show();
+            _pageLoader.loadDashboardPage();
             this.Dispose();
         }
 
         private void btnBook_Click_1(object sender, EventArgs e)
         {
-            Book.loadBookPage();
+            _pageLoader.loadBookPage();
             this.Dispose();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            Login login = new Login();
-            login.Show();
+            _pageLoader.loadLoginPage();
             this.Dispose();
         }
 
         private void btnCategory_Click(object sender, EventArgs e)
         {
-            Category.loadCategoryPage();
+            _pageLoader.loadCategoryPage();
             this.Dispose();
         }
 
         private void btnPublisher_Click(object sender, EventArgs e)
         {
-            Publisher.loadPublisherPage();
+            _pageLoader.loadPublisherPage();
             this.Dispose();
         }
 
         private void btnAccount_Click(object sender, EventArgs e)
         {
-            Account.loadAccountPage();
+            _pageLoader.loadAccountPage();
             this.Dispose();
         }
     }

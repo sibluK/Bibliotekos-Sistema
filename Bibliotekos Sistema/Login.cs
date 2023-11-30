@@ -13,6 +13,7 @@ using System.Data.Common;
 using Bibliotekos_Sistema.Database;
 using Bibliotekos_Sistema.Forms;
 using Bibliotekos_Sistema.Classes;
+using Bibliotekos_Sistema.Interfaces;
 
 namespace Bibliotekos_Sistema
 {
@@ -23,12 +24,16 @@ namespace Bibliotekos_Sistema
         Font LargeFont = new Font("Microsoft Sans Serif", 28);
 
         private string sql;
-        private SqlCommand command = new SqlCommand();
-        DBConnection _connection = new DBConnection();
+        private readonly SqlCommand _command;
+        private readonly IDatabaseOperations _databaseOperations;
+        private readonly PageLoader _pageLoader;
 
-        public Login()
+        public Login(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
+            _databaseOperations = databaseOperations;
+            _pageLoader = new PageLoader();
+            _command = new SqlCommand();
 
         }
         private void Login_Load(object sender, EventArgs e)
@@ -59,9 +64,9 @@ namespace Bibliotekos_Sistema
 
             try
             {
-                _connection.connection().Open();
-
-                if(_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     string user_name = txtUserName.Text;
                     string password = txtPassword.Text;
@@ -74,9 +79,9 @@ namespace Bibliotekos_Sistema
                     else
                     {
                         sql = $"SELECT Username,SPassword FROM tblStaff WHERE Username='{user_name}' AND SPassword='{password}'";
-                        command.Connection = _connection.connection();
-                        command.CommandText = sql;
-                        DR = command.ExecuteReader();
+                        _command.Connection = sqlConnection;
+                        _command.CommandText = sql;
+                        DR = _command.ExecuteReader();
                         while(DR.Read())
                         {
                             counter++;
@@ -84,12 +89,8 @@ namespace Bibliotekos_Sistema
                         DR.Close();
                         if(counter == 1)
                         {
-                            //User User = new User();
-                            //User.loadUser(user_name, password);
-
                             MessageBox.Show("Sėkmingai prisijungėte!");
-                            formDashboard home = new formDashboard();
-                            home.Show();
+                            _pageLoader.loadDashboardPage();
                             this.Hide();
                         }
                         else
@@ -109,14 +110,14 @@ namespace Bibliotekos_Sistema
             }
             finally
             {
-                _connection.connection().Close();
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Close();
             }
         }
 
         private void btnSingup_Click(object sender, EventArgs e)
         {
-            fromSignup signup = new fromSignup();
-            signup.Show();
+            _pageLoader.loadSignupPage();
             this.Hide();
         }
 

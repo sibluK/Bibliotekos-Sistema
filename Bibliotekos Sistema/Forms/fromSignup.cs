@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using Bibliotekos_Sistema.Classes;
+using Bibliotekos_Sistema.Interfaces;
 
 namespace Bibliotekos_Sistema.Forms
 {
@@ -20,9 +21,15 @@ namespace Bibliotekos_Sistema.Forms
         Font MediumFont = new Font("Microsoft Sans Serif", 12);
         Font LargeFont = new Font("Microsoft Sans Serif", 28);
 
-        public fromSignup()
+
+        private readonly IDatabaseOperations _databaseOperations;
+        private readonly PageLoader _pageLoader;
+
+        public fromSignup(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
+            _pageLoader = new PageLoader();
+            _databaseOperations = databaseOperations;
             passwordCheckBox.Font = SmallFont;
             passwordCheckBox2.Font = SmallFont;
         }
@@ -53,8 +60,7 @@ namespace Bibliotekos_Sistema.Forms
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            Login login = new Login();
-            login.Show();
+            _pageLoader.loadLoginPage();
             this.Dispose();
         }
 

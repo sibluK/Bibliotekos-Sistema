@@ -8,19 +8,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bibliotekos_Sistema.Database;
 using Bibliotekos_Sistema.Forms;
+using Bibliotekos_Sistema.Interfaces;
 
 namespace Bibliotekos_Sistema.Classes
 {
-    internal class Category
+    public class Category
     {
-        SqlCommand _command = new SqlCommand();
+        private readonly SqlCommand _command;
         private string sql;
-        DBConnection _connection = new DBConnection();
+        private readonly IDatabaseOperations _databaseOperations;
 
-        public void loadCategoryPage()
+        private string categoryName;
+
+        public Category(IDatabaseOperations databaseOperations)
         {
-            formCategory category = new formCategory();
-            category.Show();
+            _databaseOperations = databaseOperations;
+            _command = new SqlCommand();
         }
 
         public int totalCategory()
@@ -29,11 +32,12 @@ namespace Bibliotekos_Sistema.Classes
             int counter = 0;
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = "SELECT * FROM tblCategory";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DR = _command.ExecuteReader();
                     while (DR.Read())
@@ -53,7 +57,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
 
             return counter;
@@ -65,11 +69,12 @@ namespace Bibliotekos_Sistema.Classes
             DataTable DT = new DataTable();
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = "SELECT * FROM tblCategory";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DA.SelectCommand = _command;
                     DA.Fill(DT);
@@ -86,7 +91,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
 
@@ -96,11 +101,12 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = "SELECT * FROM tblCategory";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DR = _command.ExecuteReader();
                     while (DR.Read())
@@ -120,7 +126,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
 
@@ -131,8 +137,9 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     if (txtCategoryName.Text.Length == 0)
                     {
@@ -142,7 +149,7 @@ namespace Bibliotekos_Sistema.Classes
                     {
                         sql = $"INSERT INTO tblCategory(Category_Name)" +
                               $"VALUES('{txtCategoryName.Text}')";
-                        _command.Connection = _connection.connection();
+                        _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
@@ -172,7 +179,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
 
@@ -183,8 +190,9 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     if (txtCategoryName.Text.Length == 0)
                     {
@@ -193,7 +201,7 @@ namespace Bibliotekos_Sistema.Classes
                     else
                     {
                         sql = $"DELETE FROM tblCategory WHERE Category_ID='{int.Parse(txtCategoryID.Text)}'";
-                        _command.Connection = _connection.connection();
+                        _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
@@ -223,7 +231,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
 
@@ -234,8 +242,9 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
 
                     if (txtCategoryID.Text.Length == 0 || txtCategoryName.Text.Length == 0)
@@ -245,7 +254,7 @@ namespace Bibliotekos_Sistema.Classes
                     else
                     {
                         sql = $"UPDATE tblCategory SET Category_Name='{txtCategoryName.Text}' WHERE Category_ID='{int.Parse(txtCategoryID.Text)}'";
-                        _command.Connection = _connection.connection();
+                        _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
@@ -263,9 +272,6 @@ namespace Bibliotekos_Sistema.Classes
                             MessageBox.Show("Nepavyko atnaujinti kategorijos!");
                         }
                     }
-
-
-
                 }
             }
             catch (SqlException ex)
@@ -278,7 +284,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
 

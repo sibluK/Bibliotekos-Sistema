@@ -1,5 +1,6 @@
 ﻿using Bibliotekos_Sistema.Database;
 using Bibliotekos_Sistema.Forms;
+using Bibliotekos_Sistema.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,17 +12,17 @@ using System.Windows.Forms;
 
 namespace Bibliotekos_Sistema.Classes
 {
-    internal class Account
+    public class Account
     {
-        SqlCommand _command = new SqlCommand();
+        private readonly SqlCommand _command;
         private string sql;
-        DBConnection _connection = new DBConnection();
-        public int userType = 0;
+        private readonly IDatabaseOperations _databaseOperations;
+        private int userType = 0;
 
-        public void loadAccountPage()
+        public Account(IDatabaseOperations databaseOperations)
         {
-            formAccount account = new formAccount();
-            account.Show();
+            _databaseOperations = databaseOperations;
+            _command = new SqlCommand();
         }
 
         public int totalAccount()
@@ -30,11 +31,12 @@ namespace Bibliotekos_Sistema.Classes
             int counter = 0;
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = "SELECT * FROM tblStaff";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DR = _command.ExecuteReader();
                     while (DR.Read())
@@ -54,7 +56,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
 
             return counter;
@@ -66,16 +68,16 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = "SELECT * FROM tblStaff";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DA.SelectCommand = _command;
                     DA.Fill(DT);
                     DataGridView.DataSource = DT;
-
                 }
             }
             catch (SqlException ex)
@@ -88,14 +90,14 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
+
         public void saveAccountInfo(DataGridView dgvAccount, TextBox txtID, TextBox txtUsername, TextBox txtFullName, TextBox txtPassword, TextBox txtPasswordConfirm, ComboBox cboUserType, ComboBox cboDesignation)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
-
 
             if (cboUserType.Text == "Administratorius")
             {
@@ -106,11 +108,11 @@ namespace Bibliotekos_Sistema.Classes
                 userType = 0;
             }
 
-
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     if (txtUsername.Text.Length == 0
                         || txtFullName.Text.Length == 0
@@ -133,7 +135,7 @@ namespace Bibliotekos_Sistema.Classes
                     {
                         sql = $"INSERT INTO tblStaff(FullName,Username,SPassword,is_Admin,Designation)" +
                               $" VALUES('{txtFullName.Text}','{txtUsername.Text}','{txtPassword.Text}','{userType}','{cboDesignation.Text}')";
-                        _command.Connection = _connection.connection();
+                        _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
@@ -168,9 +170,10 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
+
         public void deleteAccountInfo(DataGridView dgvAccount, TextBox txtID, TextBox txtUsername, TextBox txtFullName, TextBox txtPassword, TextBox txtPasswordConfirm, ComboBox cboUserType, ComboBox cboDesignation)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
@@ -178,8 +181,9 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     if (txtID.Text.Length == 0)
                     {
@@ -188,7 +192,7 @@ namespace Bibliotekos_Sistema.Classes
                     else
                     {
                         sql = $"DELETE FROM tblStaff WHERE Staff_Member_ID='{txtID.Text}'";
-                        _command.Connection = _connection.connection();
+                        _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
@@ -223,9 +227,10 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
+
         public void editAccountInfo(DataGridView dgvAccount, TextBox txtID, TextBox txtUsername, TextBox txtFullName, TextBox txtPassword, TextBox txtPasswordConfirm, ComboBox cboUserType, ComboBox cboDesignation)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
@@ -233,8 +238,9 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if(_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     if (txtUsername.Text.Length == 0
                         || txtFullName.Text.Length == 0
@@ -257,7 +263,7 @@ namespace Bibliotekos_Sistema.Classes
                     {
                         sql = $"UPDATE tblStaff SET FullName='{txtFullName.Text}', Username='{txtUsername.Text}'," +
                               $" SPassword='{txtPassword.Text}', Designation='{cboDesignation.Text}' WHERE Staff_Member_ID={int.Parse(txtID.Text)}";
-                        _command.Connection = _connection.connection();
+                        _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
@@ -282,20 +288,18 @@ namespace Bibliotekos_Sistema.Classes
                     }
                 }
             }
-            catch(SqlException ex)
+            catch (SqlException ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
-
         }
-
     }
 }

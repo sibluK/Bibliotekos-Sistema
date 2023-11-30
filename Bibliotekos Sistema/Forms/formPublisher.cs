@@ -10,25 +10,27 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using Bibliotekos_Sistema.Database;
 using Bibliotekos_Sistema.Classes;
+using Bibliotekos_Sistema.Interfaces;
+using System.Security.Principal;
 
 namespace Bibliotekos_Sistema.Forms
 {
     public partial class formPublisher : Form
     {
-        public formPublisher()
+        private readonly IDatabaseOperations _databaseOperations;
+        private readonly Publisher _publisher;
+        private readonly PageLoader _pageLoader;
+        public formPublisher(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
+            _databaseOperations = databaseOperations;
+            _publisher = new Publisher(_databaseOperations);
+            _pageLoader = new PageLoader();
         }
-
-        Book Book = new Book();
-        Category Category = new Category();
-        Publisher Publisher = new Publisher();
-        Student Student = new Student();
-        Account Account = new Account();
 
         private void formPublisher_Load(object sender, EventArgs e)
         {
-            Publisher.loadPublishersIntoTable(dgvPublisher);
+            _publisher.loadPublishersIntoTable(dgvPublisher);
         }
 
         private void dgvPublisher_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -42,17 +44,17 @@ namespace Bibliotekos_Sistema.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Publisher.savePublisherInfo(dgvPublisher, txtPublisherName, txtPublisherID);
+            _publisher.savePublisherInfo(dgvPublisher, txtPublisherName, txtPublisherID);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            Publisher.editPublisherInfo(dgvPublisher, txtPublisherName, txtPublisherID);
+            _publisher.editPublisherInfo(dgvPublisher, txtPublisherName, txtPublisherID);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            Publisher.deletePublisherInfo(dgvPublisher, txtPublisherName, txtPublisherID);
+            _publisher.deletePublisherInfo(dgvPublisher, txtPublisherName, txtPublisherID);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -65,39 +67,37 @@ namespace Bibliotekos_Sistema.Forms
         //// NAVIGATION ////
         private void btnHome_Click(object sender, EventArgs e)
         {
-            formDashboard home = new formDashboard();
-            home.Show();
+            _pageLoader.loadDashboardPage();
             this.Dispose();
         }
 
         private void btnBook_Click(object sender, EventArgs e)
         {
-            Book.loadBookPage();
+            _pageLoader.loadBookPage();
             this.Dispose();
         }
 
         private void btnStudent_Click(object sender, EventArgs e)
         {
-            Student.loadStudentPage();
+            _pageLoader.loadStudentPage();
             this.Dispose();
         }
 
         private void btnCategory_Click(object sender, EventArgs e)
         {
-            Category.loadCategoryPage();
+            _pageLoader.loadCategoryPage();
             this.Dispose();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            Login login = new Login();
-            login.Show();
+            _pageLoader.loadLoginPage();
             this.Dispose();
         }
 
         private void btnAccount_Click(object sender, EventArgs e)
         {
-            Account.loadAccountPage();
+            _pageLoader.loadAccountPage();
             this.Dispose();
         }
     }

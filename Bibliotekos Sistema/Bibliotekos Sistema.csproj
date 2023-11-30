@@ -49,6 +49,7 @@
     <Compile Include="Classes\Account.cs" />
     <Compile Include="Classes\Book.cs" />
     <Compile Include="Classes\Category.cs" />
+    <Compile Include="Classes\PageLoader.cs" />
     <Compile Include="Classes\Publisher.cs" />
     <Compile Include="Classes\Student.cs" />
     <Compile Include="Classes\User.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Forms\fromSignup.Designer.cs">
       <DependentUpon>fromSignup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IDatabaseOperations.cs" />
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>

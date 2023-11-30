@@ -8,19 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Bibliotekos_Sistema.Database;
+using Bibliotekos_Sistema.Interfaces;
 
 namespace Bibliotekos_Sistema.Classes
 {
-    internal class Book
+    public class Book
     {
-        SqlCommand _command = new SqlCommand();
+        private readonly SqlCommand _command;
         private string sql;
-        DBConnection _connection = new DBConnection();
+        private readonly IDatabaseOperations _databaseOperations;
 
-        public void loadBookPage()
+        public Book(IDatabaseOperations databaseOperations)
         {
-            formBook book = new formBook();
-            book.Show();
+            _databaseOperations = databaseOperations;
+            _command = new SqlCommand();
         }
 
         public int totalBook()
@@ -29,11 +30,12 @@ namespace Bibliotekos_Sistema.Classes
             int counter = 0;
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = "SELECT * FROM tblBookDetail";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DR = _command.ExecuteReader();
                     while (DR.Read())
@@ -53,7 +55,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
 
             return counter;
@@ -66,11 +68,12 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = "SELECT * FROM tblBookDetail";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DA.SelectCommand = _command;
                     DA.Fill(DT);
@@ -88,7 +91,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
 
@@ -100,11 +103,12 @@ namespace Bibliotekos_Sistema.Classes
             int categoryID = 0, publisherID = 0;
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = $"SELECT Category_ID FROM tblCategory WHERE Category_Name='{cboCategory.Text}'";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DR = _command.ExecuteReader();
                     while (DR.Read())
@@ -163,10 +167,10 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
-    
+
         public void deleteBookInfo(DataGridView dgvBook, ComboBox cboCategory, ComboBox cboPublisher, TextBox txtISBN, TextBox txtTitle, TextBox txtPubYear, TextBox txtAcNumber, TextBox txtCurrNumber)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
@@ -174,11 +178,12 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = $"DELETE FROM tblBookDetail WHERE ISBN='{txtISBN.Text}'";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     if (_command.ExecuteNonQuery() > 0)
                     {
@@ -212,10 +217,10 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
-    
+
         public void editBookInfo(DataGridView dgvBook, ComboBox cboCategory, ComboBox cboPublisher, TextBox txtISBN, TextBox txtTitle, TextBox txtPubYear, TextBox txtAcNumber, TextBox txtCurrNumber)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
@@ -225,12 +230,13 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     Console.WriteLine("Connected!");
                     sql = $"SELECT Category_ID FROM tblCategory WHERE Category_Name='{cboCategory.Text}'";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DR = _command.ExecuteReader();
                     while (DR.Read())
@@ -293,11 +299,8 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
-    
-
     }
-
 }

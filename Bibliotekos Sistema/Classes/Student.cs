@@ -1,5 +1,6 @@
 ﻿using Bibliotekos_Sistema.Database;
 using Bibliotekos_Sistema.Forms;
+using Bibliotekos_Sistema.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,16 +13,16 @@ using System.Windows.Forms;
 
 namespace Bibliotekos_Sistema.Classes
 {
-    internal class Student
+    public class Student
     {
-        SqlCommand _command = new SqlCommand();
+        private readonly SqlCommand _command;
         private string sql;
-        DBConnection _connection = new DBConnection();
+        private readonly IDatabaseOperations _databaseOperations;
 
-        public void loadStudentPage()
+        public Student(IDatabaseOperations databaseOperations)
         {
-            formStudent student = new formStudent();
-            student.Show();
+            _databaseOperations = databaseOperations;
+            _command = new SqlCommand();
         }
 
         public int totalStudents()
@@ -30,11 +31,12 @@ namespace Bibliotekos_Sistema.Classes
             int counter = 0;
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = "SELECT * FROM tblStudentDetail";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DR = _command.ExecuteReader();
                     while (DR.Read())
@@ -54,7 +56,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
 
             return counter;
@@ -66,11 +68,12 @@ namespace Bibliotekos_Sistema.Classes
             DataTable DT = new DataTable();
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = "SELECT * FROM tblStudentDetail";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DA.SelectCommand = _command;
                     DA.Fill(DT);
@@ -87,7 +90,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
 
@@ -98,8 +101,9 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     if (txtFullName.Text.Length == 0 || txtPhone.Text.Length == 0)
                     {
@@ -109,7 +113,7 @@ namespace Bibliotekos_Sistema.Classes
                     {
                         sql = $"INSERT INTO tblStudentDetail(Stud_ID,Full_Name,Gender,Date_Of_Birth,Department,Phone_Number)" +
                               $"VALUES('{txtStudentID.Text}','{txtFullName.Text}','{cboGender.Text}','{mtbDateOfBirth.Text}','{cboDepartment.Text}','{txtPhone.Text}')";
-                        _command.Connection = _connection.connection();
+                        _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
@@ -143,7 +147,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
 
@@ -154,8 +158,9 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     if (txtStudentID.Text.Length == 0)
                     {
@@ -164,7 +169,7 @@ namespace Bibliotekos_Sistema.Classes
                     else
                     {
                         sql = $"DELETE FROM tblStudentDetail WHERE Stud_ID='{txtStudentID.Text}'";
-                        _command.Connection = _connection.connection();
+                        _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
@@ -198,7 +203,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
     
@@ -209,8 +214,9 @@ namespace Bibliotekos_Sistema.Classes
 
             try
             {
-                _connection.connection().Open();
-                if (_connection.connection().State == ConnectionState.Open)
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
                 {
                     sql = $"UPDATE tblStudentDetail SET" +
                           $" Full_Name='{txtFullName.Text}'," +
@@ -219,7 +225,7 @@ namespace Bibliotekos_Sistema.Classes
                           $"Department='{cboDepartment.Text}'," +
                           $"Phone_Number='{txtPhone.Text}'" +
                           $" WHERE Stud_ID='{txtStudentID.Text}'";
-                    _command.Connection = _connection.connection();
+                    _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     if (_command.ExecuteNonQuery() > 0)
                     {
@@ -253,7 +259,7 @@ namespace Bibliotekos_Sistema.Classes
             }
             finally
             {
-                _connection.connection().Close();
+                _databaseOperations.GetConnection().Close();
             }
         }
     }

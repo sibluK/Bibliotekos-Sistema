@@ -1,5 +1,6 @@
 ﻿using Bibliotekos_Sistema.Classes;
 using Bibliotekos_Sistema.Database;
+using Bibliotekos_Sistema.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,21 +16,23 @@ namespace Bibliotekos_Sistema.Forms
 {
     public partial class formCategory : Form
     {
-        Book Book = new Book();
-        Category Category = new Category();
-        Publisher Publisher = new Publisher();
-        Student Student = new Student();
-        Account Account = new Account();
+        private readonly IDatabaseOperations _databaseOperations;
+        private readonly Category _category;
+        private readonly PageLoader _pageLoader;
 
-        public formCategory()
+        public formCategory(IDatabaseOperations databaseOperations)
         {
             InitializeComponent();
+            _databaseOperations = databaseOperations;
+            _category = new Category(_databaseOperations);
+            _pageLoader = new PageLoader();
+
         }
 
 
         private void formCategory_Load(object sender, EventArgs e)
         {
-            Category.loadCategoriesIntoTable(dgvCategory);
+            _category.loadCategoriesIntoTable(dgvCategory);
         }
 
         private void dgvCategory_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -43,17 +46,17 @@ namespace Bibliotekos_Sistema.Forms
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Category.saveCategoryInfo(dgvCategory, txtCategoryName, txtCategoryID);
+            _category.saveCategoryInfo(dgvCategory, txtCategoryName, txtCategoryID);
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            Category.deleteCategoryInfo(dgvCategory, txtCategoryName, txtCategoryID);
+            _category.deleteCategoryInfo(dgvCategory, txtCategoryName, txtCategoryID);
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            Category.editCategoryInfo(dgvCategory, txtCategoryName, txtCategoryID);
+            _category.editCategoryInfo(dgvCategory, txtCategoryName, txtCategoryID);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -65,39 +68,37 @@ namespace Bibliotekos_Sistema.Forms
         //// NAVIGATION ////
         private void btnHome_Click(object sender, EventArgs e)
         {
-            formDashboard home = new formDashboard();
-            home.Show();
+            _pageLoader.loadDashboardPage();
             this.Dispose();
         }
 
         private void btnBook_Click(object sender, EventArgs e)
         {
-            Book.loadBookPage();
+            _pageLoader.loadBookPage();
             this.Dispose();
         }
 
         private void btnPublisher_Click(object sender, EventArgs e)
         {
-            Publisher.loadPublisherPage();
+            _pageLoader.loadPublisherPage();
             this.Dispose();
         }
 
         private void btnStudent_Click(object sender, EventArgs e)
         {
-            Student.loadStudentPage();
+            _pageLoader.loadStudentPage();
             this.Dispose();
         }
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            Login login = new Login();
-            login.Show();
+            _pageLoader.loadLoginPage();
             this.Dispose();
         }
 
         private void btnAccount_Click(object sender, EventArgs e)
         {
-            Account.loadAccountPage();
+            _pageLoader.loadAccountPage();
             this.Dispose();
         }
     }
