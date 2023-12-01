@@ -170,7 +170,6 @@ namespace Bibliotekos_Sistema.Classes
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
-
             try
             {
                 SqlConnection sqlConnection = _databaseOperations.GetConnection();

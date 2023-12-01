@@ -139,6 +139,7 @@
             this.btnRent.Size = new System.Drawing.Size(112, 46);
             this.btnRent.TabIndex = 7;
             this.btnRent.UseVisualStyleBackColor = true;
+            this.btnRent.Click += new System.EventHandler(this.btnRent_Click);
             // 
             // btnAccount
             // 
@@ -225,9 +226,12 @@
             // 
             // dgvBook
             // 
+            this.dgvBook.AllowUserToAddRows = false;
+            this.dgvBook.AllowUserToDeleteRows = false;
             this.dgvBook.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBook.Location = new System.Drawing.Point(508, 105);
             this.dgvBook.Name = "dgvBook";
+            this.dgvBook.ReadOnly = true;
             this.dgvBook.RowHeadersWidth = 51;
             this.dgvBook.Size = new System.Drawing.Size(761, 551);
             this.dgvBook.TabIndex = 9;

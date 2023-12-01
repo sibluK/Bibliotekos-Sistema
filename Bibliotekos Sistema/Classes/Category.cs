@@ -14,6 +14,7 @@ namespace Bibliotekos_Sistema.Classes
 {
     public class Category
     {
-       
+        public int categoryID;
+        public string name;
     }
 }

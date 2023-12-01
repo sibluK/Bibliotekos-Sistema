@@ -15,6 +15,7 @@ namespace Bibliotekos_Sistema.Classes
 {
     public class Publisher
     {
-        
+        public int publisherID;
+        public string publisherName;
     }
 }

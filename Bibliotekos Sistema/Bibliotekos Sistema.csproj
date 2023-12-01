@@ -50,6 +50,7 @@
     <Compile Include="Classes\AccountService.cs" />
     <Compile Include="Classes\Book.cs" />
     <Compile Include="Classes\BookService.cs" />
+    <Compile Include="Classes\BorrowService.cs" />
     <Compile Include="Classes\Category.cs" />
     <Compile Include="Classes\CategoryService.cs" />
     <Compile Include="Classes\PageLoader.cs" />
@@ -71,6 +72,12 @@
     </Compile>
     <Compile Include="Forms\formBook.Designer.cs">
       <DependentUpon>formBook.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\formBorrow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\formBorrow.Designer.cs">
+      <DependentUpon>formBorrow.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\formCategory.cs">
       <SubType>Form</SubType>
@@ -116,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\formBook.resx">
       <DependentUpon>formBook.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\formBorrow.resx">
+      <DependentUpon>formBorrow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\formCategory.resx">
       <DependentUpon>formCategory.cs</DependentUpon>

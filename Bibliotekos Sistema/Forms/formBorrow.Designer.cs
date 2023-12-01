@@ -1,6 +1,6 @@
 ﻿namespace Bibliotekos_Sistema.Forms
 {
-    partial class formStudent
+    partial class formBorrow
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formBorrow));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formStudent));
-            this.dgvStudent = new System.Windows.Forms.DataGridView();
             this.pnlNavigation = new System.Windows.Forms.Panel();
             this.btnLogout = new System.Windows.Forms.Button();
             this.btnRent = new System.Windows.Forms.Button();
@@ -41,62 +40,35 @@
             this.btnStudent = new System.Windows.Forms.Button();
             this.btnBook = new System.Windows.Forms.Button();
             this.btnHome = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblHeader = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtFullName = new System.Windows.Forms.TextBox();
-            this.cboGender = new System.Windows.Forms.ComboBox();
-            this.cboDepartment = new System.Windows.Forms.ComboBox();
-            this.txtPhone = new System.Windows.Forms.TextBox();
-            this.mtbDateOfBirth = new System.Windows.Forms.MaskedTextBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
+            this.txtIssuerID = new System.Windows.Forms.TextBox();
+            this.txtISBN = new System.Windows.Forms.TextBox();
+            this.txtBorrowID = new System.Windows.Forms.TextBox();
+            this.labelisbn = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txt = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.txtStudentID = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvStudent)).BeginInit();
+            this.label7 = new System.Windows.Forms.Label();
+            this.mtbBorrowDate = new System.Windows.Forms.MaskedTextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.mtbReturnDate = new System.Windows.Forms.MaskedTextBox();
+            this.dgvBorrows = new System.Windows.Forms.DataGridView();
             this.pnlNavigation.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBorrows)).BeginInit();
             this.SuspendLayout();
-            // 
-            // dgvStudent
-            // 
-            this.dgvStudent.AllowUserToAddRows = false;
-            this.dgvStudent.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvStudent.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvStudent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvStudent.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvStudent.Location = new System.Drawing.Point(626, 105);
-            this.dgvStudent.Margin = new System.Windows.Forms.Padding(2);
-            this.dgvStudent.Name = "dgvStudent";
-            this.dgvStudent.ReadOnly = true;
-            this.dgvStudent.Size = new System.Drawing.Size(643, 551);
-            this.dgvStudent.TabIndex = 19;
-            this.dgvStudent.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStudent_CellContentClick);
             // 
             // pnlNavigation
             // 
@@ -113,7 +85,7 @@
             this.pnlNavigation.Location = new System.Drawing.Point(0, 0);
             this.pnlNavigation.Name = "pnlNavigation";
             this.pnlNavigation.Size = new System.Drawing.Size(157, 668);
-            this.pnlNavigation.TabIndex = 20;
+            this.pnlNavigation.TabIndex = 9;
             // 
             // btnLogout
             // 
@@ -141,7 +113,6 @@
             this.btnRent.Size = new System.Drawing.Size(112, 46);
             this.btnRent.TabIndex = 7;
             this.btnRent.UseVisualStyleBackColor = true;
-            this.btnRent.Click += new System.EventHandler(this.btnRent_Click);
             // 
             // btnAccount
             // 
@@ -197,6 +168,7 @@
             this.btnStudent.Size = new System.Drawing.Size(112, 46);
             this.btnStudent.TabIndex = 3;
             this.btnStudent.UseVisualStyleBackColor = true;
+            this.btnStudent.Click += new System.EventHandler(this.btnStudent_Click);
             // 
             // btnBook
             // 
@@ -210,7 +182,7 @@
             this.btnBook.Size = new System.Drawing.Size(112, 46);
             this.btnBook.TabIndex = 2;
             this.btnBook.UseVisualStyleBackColor = true;
-            this.btnBook.Click += new System.EventHandler(this.btnBook_Click_1);
+            this.btnBook.Click += new System.EventHandler(this.btnBook_Click);
             // 
             // btnHome
             // 
@@ -224,37 +196,7 @@
             this.btnHome.Size = new System.Drawing.Size(112, 46);
             this.btnHome.TabIndex = 1;
             this.btnHome.UseVisualStyleBackColor = true;
-            this.btnHome.Click += new System.EventHandler(this.btnHome_Click_1);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(429, 37);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(29, 21);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 25;
-            this.pictureBox2.TabStop = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(464, 36);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(76, 21);
-            this.label2.TabIndex = 24;
-            this.label2.Text = "Studentai";
-            // 
-            // lblHeader
-            // 
-            this.lblHeader.AutoSize = true;
-            this.lblHeader.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeader.Location = new System.Drawing.Point(278, 36);
-            this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(145, 21);
-            this.lblHeader.TabIndex = 23;
-            this.lblHeader.Text = "Bibliotekos Sistema";
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
             // 
             // pictureBox1
             // 
@@ -263,8 +205,38 @@
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(100, 50);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 22;
+            this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(429, 37);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(29, 21);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 15;
+            this.pictureBox2.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(464, 36);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(86, 21);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Skolinimas";
+            // 
+            // lblHeader
+            // 
+            this.lblHeader.AutoSize = true;
+            this.lblHeader.Font = new System.Drawing.Font("Microsoft Tai Le", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeader.Location = new System.Drawing.Point(278, 36);
+            this.lblHeader.Name = "lblHeader";
+            this.lblHeader.Size = new System.Drawing.Size(145, 21);
+            this.lblHeader.TabIndex = 13;
+            this.lblHeader.Text = "Bibliotekos Sistema";
             // 
             // panel1
             // 
@@ -272,108 +244,7 @@
             this.panel1.Location = new System.Drawing.Point(163, 74);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1106, 15);
-            this.panel1.TabIndex = 21;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(225, 199);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(119, 19);
-            this.label1.TabIndex = 26;
-            this.label1.Text = "Vardas ir pavardė:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(302, 261);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 19);
-            this.label3.TabIndex = 27;
-            this.label3.Text = "Lytis:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(251, 331);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(91, 19);
-            this.label4.TabIndex = 28;
-            this.label4.Text = "Gimimo data:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(288, 392);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(56, 19);
-            this.label5.TabIndex = 29;
-            this.label5.Text = "Skyrius:";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(274, 457);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 19);
-            this.label6.TabIndex = 30;
-            this.label6.Text = "Telefonas:";
-            // 
-            // txtFullName
-            // 
-            this.txtFullName.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFullName.Location = new System.Drawing.Point(348, 199);
-            this.txtFullName.Name = "txtFullName";
-            this.txtFullName.Size = new System.Drawing.Size(177, 23);
-            this.txtFullName.TabIndex = 31;
-            // 
-            // cboGender
-            // 
-            this.cboGender.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboGender.FormattingEnabled = true;
-            this.cboGender.Items.AddRange(new object[] {
-            "V",
-            "M"});
-            this.cboGender.Location = new System.Drawing.Point(348, 260);
-            this.cboGender.Name = "cboGender";
-            this.cboGender.Size = new System.Drawing.Size(177, 25);
-            this.cboGender.TabIndex = 33;
-            // 
-            // cboDepartment
-            // 
-            this.cboDepartment.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboDepartment.FormattingEnabled = true;
-            this.cboDepartment.Items.AddRange(new object[] {
-            "Informatika",
-            "Ekonomika",
-            "Verslas"});
-            this.cboDepartment.Location = new System.Drawing.Point(348, 391);
-            this.cboDepartment.Name = "cboDepartment";
-            this.cboDepartment.Size = new System.Drawing.Size(177, 25);
-            this.cboDepartment.TabIndex = 34;
-            // 
-            // txtPhone
-            // 
-            this.txtPhone.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhone.Location = new System.Drawing.Point(348, 457);
-            this.txtPhone.Name = "txtPhone";
-            this.txtPhone.Size = new System.Drawing.Size(177, 23);
-            this.txtPhone.TabIndex = 35;
-            // 
-            // mtbDateOfBirth
-            // 
-            this.mtbDateOfBirth.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mtbDateOfBirth.Location = new System.Drawing.Point(348, 332);
-            this.mtbDateOfBirth.Mask = "00/00/0000";
-            this.mtbDateOfBirth.Name = "mtbDateOfBirth";
-            this.mtbDateOfBirth.Size = new System.Drawing.Size(177, 23);
-            this.mtbDateOfBirth.TabIndex = 36;
-            this.mtbDateOfBirth.ValidatingType = typeof(System.DateTime);
+            this.panel1.TabIndex = 16;
             // 
             // btnClear
             // 
@@ -382,13 +253,12 @@
             this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClear.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClear.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnClear.Location = new System.Drawing.Point(349, 574);
+            this.btnClear.Location = new System.Drawing.Point(334, 541);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(79, 30);
-            this.btnClear.TabIndex = 40;
+            this.btnClear.TabIndex = 49;
             this.btnClear.Text = "Valyti";
             this.btnClear.UseVisualStyleBackColor = false;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnDelete
             // 
@@ -397,13 +267,12 @@
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDelete.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnDelete.Location = new System.Drawing.Point(446, 527);
+            this.btnDelete.Location = new System.Drawing.Point(431, 494);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(79, 30);
-            this.btnDelete.TabIndex = 39;
+            this.btnDelete.TabIndex = 48;
             this.btnDelete.Text = "Ištrinti";
             this.btnDelete.UseVisualStyleBackColor = false;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnEdit
             // 
@@ -412,13 +281,12 @@
             this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnEdit.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEdit.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnEdit.Location = new System.Drawing.Point(446, 574);
+            this.btnEdit.Location = new System.Drawing.Point(431, 541);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(79, 30);
-            this.btnEdit.TabIndex = 38;
+            this.btnEdit.TabIndex = 47;
             this.btnEdit.Text = "Keisti";
             this.btnEdit.UseVisualStyleBackColor = false;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnSave
             // 
@@ -427,88 +295,219 @@
             this.btnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSave.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.ForeColor = System.Drawing.SystemColors.Control;
-            this.btnSave.Location = new System.Drawing.Point(348, 527);
+            this.btnSave.Location = new System.Drawing.Point(333, 494);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(79, 30);
-            this.btnSave.TabIndex = 37;
+            this.btnSave.TabIndex = 46;
             this.btnSave.Text = "Įsaugoti";
             this.btnSave.UseVisualStyleBackColor = false;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // txtIssuerID
+            // 
+            this.txtIssuerID.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIssuerID.Location = new System.Drawing.Point(334, 425);
+            this.txtIssuerID.Name = "txtIssuerID";
+            this.txtIssuerID.Size = new System.Drawing.Size(176, 23);
+            this.txtIssuerID.TabIndex = 44;
+            // 
+            // txtISBN
+            // 
+            this.txtISBN.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtISBN.Location = new System.Drawing.Point(334, 206);
+            this.txtISBN.Name = "txtISBN";
+            this.txtISBN.Size = new System.Drawing.Size(176, 23);
+            this.txtISBN.TabIndex = 42;
+            // 
+            // txtBorrowID
+            // 
+            this.txtBorrowID.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtBorrowID.Location = new System.Drawing.Point(334, 151);
+            this.txtBorrowID.Name = "txtBorrowID";
+            this.txtBorrowID.Size = new System.Drawing.Size(176, 23);
+            this.txtBorrowID.TabIndex = 41;
+            // 
+            // labelisbn
+            // 
+            this.labelisbn.AutoSize = true;
+            this.labelisbn.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelisbn.Location = new System.Drawing.Point(288, 206);
+            this.labelisbn.Name = "labelisbn";
+            this.labelisbn.Size = new System.Drawing.Size(47, 19);
+            this.labelisbn.TabIndex = 38;
+            this.labelisbn.Text = "ISBN: ";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(238, 426);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(92, 19);
+            this.label6.TabIndex = 36;
+            this.label6.Text = " Išduotojo ID:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(225, 369);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(105, 19);
+            this.label5.TabIndex = 35;
+            this.label5.Text = "Gražinimo data:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(225, 316);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(103, 19);
+            this.label4.TabIndex = 34;
+            this.label4.Text = "Skolinimo data:";
+            // 
+            // txt
+            // 
+            this.txt.AutoSize = true;
+            this.txt.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt.Location = new System.Drawing.Point(246, 262);
+            this.txt.Name = "txt";
+            this.txt.Size = new System.Drawing.Size(91, 19);
+            this.txt.TabIndex = 33;
+            this.txt.Text = "Studento ID: ";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(241, 152);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(94, 19);
+            this.label1.TabIndex = 32;
+            this.label1.Text = "Skolinimo ID: ";
+            // 
+            // txtStudentID
+            // 
+            this.txtStudentID.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtStudentID.Location = new System.Drawing.Point(334, 262);
+            this.txtStudentID.Name = "txtStudentID";
+            this.txtStudentID.Size = new System.Drawing.Size(176, 23);
+            this.txtStudentID.TabIndex = 50;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(348, 313);
+            this.label7.Location = new System.Drawing.Point(333, 297);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(128, 16);
-            this.label7.TabIndex = 41;
+            this.label7.TabIndex = 52;
             this.label7.Text = "(Mėnesis/Diena/Metai)";
             // 
-            // txtStudentID
+            // mtbBorrowDate
             // 
-            this.txtStudentID.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStudentID.Location = new System.Drawing.Point(348, 143);
-            this.txtStudentID.Name = "txtStudentID";
-            this.txtStudentID.Size = new System.Drawing.Size(177, 23);
-            this.txtStudentID.TabIndex = 43;
+            this.mtbBorrowDate.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mtbBorrowDate.Location = new System.Drawing.Point(333, 316);
+            this.mtbBorrowDate.Mask = "00/00/0000";
+            this.mtbBorrowDate.Name = "mtbBorrowDate";
+            this.mtbBorrowDate.Size = new System.Drawing.Size(177, 23);
+            this.mtbBorrowDate.TabIndex = 51;
+            this.mtbBorrowDate.ValidatingType = typeof(System.DateTime);
             // 
-            // label8
+            // label3
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(255, 144);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(87, 19);
-            this.label8.TabIndex = 42;
-            this.label8.Text = "Studento ID:";
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(333, 350);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(128, 16);
+            this.label3.TabIndex = 54;
+            this.label3.Text = "(Mėnesis/Diena/Metai)";
             // 
-            // formStudent
+            // mtbReturnDate
+            // 
+            this.mtbReturnDate.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mtbReturnDate.Location = new System.Drawing.Point(333, 369);
+            this.mtbReturnDate.Mask = "00/00/0000";
+            this.mtbReturnDate.Name = "mtbReturnDate";
+            this.mtbReturnDate.Size = new System.Drawing.Size(177, 23);
+            this.mtbReturnDate.TabIndex = 53;
+            this.mtbReturnDate.ValidatingType = typeof(System.DateTime);
+            // 
+            // dgvBorrows
+            // 
+            this.dgvBorrows.AllowUserToAddRows = false;
+            this.dgvBorrows.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvBorrows.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvBorrows.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvBorrows.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvBorrows.Location = new System.Drawing.Point(626, 105);
+            this.dgvBorrows.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvBorrows.Name = "dgvBorrows";
+            this.dgvBorrows.ReadOnly = true;
+            this.dgvBorrows.Size = new System.Drawing.Size(643, 551);
+            this.dgvBorrows.TabIndex = 55;
+            // 
+            // formBorrow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1281, 668);
-            this.Controls.Add(this.txtStudentID);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.btnEdit);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.mtbDateOfBirth);
-            this.Controls.Add(this.txtPhone);
-            this.Controls.Add(this.cboDepartment);
-            this.Controls.Add(this.cboGender);
-            this.Controls.Add(this.txtFullName);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.dgvBorrows);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.lblHeader);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.mtbReturnDate);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.mtbBorrowDate);
+            this.Controls.Add(this.txtStudentID);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.btnEdit);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.lblHeader);
+            this.Controls.Add(this.txtIssuerID);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pnlNavigation);
-            this.Controls.Add(this.dgvStudent);
-            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Controls.Add(this.txtISBN);
+            this.Controls.Add(this.txtBorrowID);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.labelisbn);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.txt);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "formStudent";
+            this.Name = "formBorrow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "formStudent";
-            this.Load += new System.EventHandler(this.formStudent_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvStudent)).EndInit();
+            this.Text = "formBorrow";
+            this.Load += new System.EventHandler(this.formBorrow_Load);
             this.pnlNavigation.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBorrows)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.DataGridView dgvStudent;
+
         private System.Windows.Forms.Panel pnlNavigation;
         private System.Windows.Forms.Button btnLogout;
         private System.Windows.Forms.Button btnRent;
@@ -518,27 +517,29 @@
         private System.Windows.Forms.Button btnStudent;
         private System.Windows.Forms.Button btnBook;
         private System.Windows.Forms.Button btnHome;
+        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblHeader;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtFullName;
-        private System.Windows.Forms.ComboBox cboGender;
-        private System.Windows.Forms.ComboBox cboDepartment;
-        private System.Windows.Forms.TextBox txtPhone;
-        private System.Windows.Forms.MaskedTextBox mtbDateOfBirth;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtIssuerID;
+        private System.Windows.Forms.TextBox txtISBN;
+        private System.Windows.Forms.TextBox txtBorrowID;
+        private System.Windows.Forms.Label labelisbn;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label txt;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtStudentID;
-        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.MaskedTextBox mtbBorrowDate;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.MaskedTextBox mtbReturnDate;
+        private System.Windows.Forms.DataGridView dgvBorrows;
     }
 }

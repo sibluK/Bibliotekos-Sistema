@@ -16,8 +16,6 @@ namespace Bibliotekos_Sistema.Classes
         private string sql;
         private readonly IDatabaseOperations _databaseOperations;
 
-        private string categoryName;
-
         public CategoryService(IDatabaseOperations databaseOperations)
         {
             _databaseOperations = databaseOperations;

@@ -101,5 +101,11 @@ namespace Bibliotekos_Sistema.Forms
             _pageLoader.loadAccountPage();
             this.Dispose();
         }
+
+        private void btnRent_Click(object sender, EventArgs e)
+        {
+            _pageLoader.loadBorrowPage();
+            this.Dispose();
+        }
     }
 }

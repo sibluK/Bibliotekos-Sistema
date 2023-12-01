@@ -15,5 +15,11 @@ namespace Bibliotekos_Sistema.Classes
 {
     public class Student
     {
+        public int studentID;
+        public string fullName;
+        public char gender;
+        public DateTime DateOfBirth;
+        public string department;
+        public string phoneNumber;
     }
 }

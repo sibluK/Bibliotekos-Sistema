@@ -113,6 +113,7 @@
             this.btnRent.Size = new System.Drawing.Size(112, 46);
             this.btnRent.TabIndex = 7;
             this.btnRent.UseVisualStyleBackColor = true;
+            this.btnRent.Click += new System.EventHandler(this.btnRent_Click);
             // 
             // btnAccount
             // 

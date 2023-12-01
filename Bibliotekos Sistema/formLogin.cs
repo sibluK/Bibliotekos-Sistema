@@ -59,9 +59,12 @@ namespace Bibliotekos_Sistema
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _userService.authenticateUser(txtUserName.Text, txtPassword.Text);
-            _pageLoader.loadDashboardPage();
-            this.Hide();
+            
+            if(_userService.authenticateUser(txtUserName.Text, txtPassword.Text))
+            {
+                _pageLoader.loadDashboardPage();
+                this.Hide();
+            }
         }
 
         private void btnSingup_Click(object sender, EventArgs e)

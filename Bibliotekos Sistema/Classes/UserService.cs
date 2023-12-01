@@ -16,18 +16,17 @@ namespace Bibliotekos_Sistema.Classes
         private readonly SqlCommand _command;
         private string sql;
         private int userType;
-        private readonly PageLoader _pageLoader;
 
         public UserService(IDatabaseOperations databaseOperations)
         {
             _databaseOperations = databaseOperations;
             _command = new SqlCommand();
-            _pageLoader = new PageLoader();
         }
   
-        public void authenticateUser(string username, string password)
+        public bool authenticateUser(string username, string password)
         {
             SqlDataReader DR;
+            bool user = false;
 
             try
             {
@@ -55,6 +54,7 @@ namespace Bibliotekos_Sistema.Classes
                         if (counter == 1)
                         {
                             MessageBox.Show("Sėkmingai prisijungėte!");
+                            user = true;
                         }
                         else
                         {
@@ -76,6 +76,7 @@ namespace Bibliotekos_Sistema.Classes
                 SqlConnection sqlConnection = _databaseOperations.GetConnection();
                 sqlConnection.Close();
             }
+            return user;
         }
 
         public void insertUserIntoDatabase(ComboBox cboUserType, TextBox txtUsername, TextBox txtFullName, TextBox txtPassword, TextBox txtPasswordConfirm, ComboBox cboDesignation)

@@ -47,5 +47,10 @@ namespace Bibliotekos_Sistema.Classes
             formDashboard dashboard = new formDashboard(databaseOperations);
             dashboard.Show();
         }
+        public void loadBorrowPage()
+        {
+            formBorrow borrow = new formBorrow(databaseOperations);
+            borrow.Show();
+        }
     }
 }

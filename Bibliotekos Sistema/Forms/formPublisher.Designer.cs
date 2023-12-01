@@ -149,6 +149,7 @@
             this.btnRent.Size = new System.Drawing.Size(112, 46);
             this.btnRent.TabIndex = 7;
             this.btnRent.UseVisualStyleBackColor = true;
+            this.btnRent.Click += new System.EventHandler(this.btnRent_Click);
             // 
             // btnAccount
             // 
@@ -235,9 +236,12 @@
             // 
             // dgvPublisher
             // 
+            this.dgvPublisher.AllowUserToAddRows = false;
+            this.dgvPublisher.AllowUserToDeleteRows = false;
             this.dgvPublisher.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPublisher.Location = new System.Drawing.Point(626, 105);
             this.dgvPublisher.Name = "dgvPublisher";
+            this.dgvPublisher.ReadOnly = true;
             this.dgvPublisher.Size = new System.Drawing.Size(643, 551);
             this.dgvPublisher.TabIndex = 38;
             this.dgvPublisher.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPublisher_CellContentClick);
@@ -308,9 +312,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(250, 209);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 19);
+            this.label1.Size = new System.Drawing.Size(73, 19);
             this.label1.TabIndex = 49;
-            this.label1.Text = "Leidėjo_ID:";
+            this.label1.Text = "Leidėjo ID:";
             // 
             // label3
             // 

@@ -14,6 +14,11 @@ namespace Bibliotekos_Sistema.Classes
 {
     public class Account
     {
-
+        public string AccountID;
+        public string username;
+        public string password;
+        public string fullName;
+        public string userType;
+        public string designation;
     }
 }
