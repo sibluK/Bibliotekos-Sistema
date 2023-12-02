@@ -46,23 +46,26 @@ namespace Bibliotekos_Sistema.Forms
                 mtbDateOfBirth.Text = dgvStudent.CurrentRow.Cells[3].Value.ToString();
                 cboDepartment.Text = dgvStudent.CurrentRow.Cells[4].Value.ToString();
                 txtPhone.Text = dgvStudent.CurrentRow.Cells[5].Value.ToString();
-
             }
+            txtStudentID.Enabled = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             _studentService.saveStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
+            txtStudentID.Enabled = true;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
             _studentService.deleteStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
+            txtStudentID.Enabled = true;
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
             _studentService.editStudentInfo(dgvStudent, txtFullName, txtPhone, txtStudentID, cboDepartment, cboGender, mtbDateOfBirth);
+            txtStudentID.Enabled = true;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -73,6 +76,7 @@ namespace Bibliotekos_Sistema.Forms
             cboDepartment.ResetText();
             cboGender.ResetText();
             mtbDateOfBirth.Clear();
+            txtStudentID.Enabled = true;
         }
 
         //// NAVIGATION ////

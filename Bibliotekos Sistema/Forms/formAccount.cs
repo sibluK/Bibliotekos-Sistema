@@ -46,21 +46,25 @@ namespace Bibliotekos_Sistema.Forms
                 cboUserType.Text = dgvAccount.CurrentRow.Cells[4].Value.ToString();
                 cboDesignation.Text = dgvAccount.CurrentRow.Cells[5].Value.ToString();
             }
+            txtID.Enabled = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             _accountService.saveAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
+            txtID.Enabled = true;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
             _accountService.deleteAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
+            txtID.Enabled = true;
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
             _accountService.editAccountInfo(dgvAccount, txtID, txtUsername, txtFullName, txtPassword, txtPasswordConfirm, cboUserType, cboDesignation);
+            txtID.Enabled = true;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -72,6 +76,7 @@ namespace Bibliotekos_Sistema.Forms
             txtPasswordConfirm.Clear();
             cboUserType.ResetText();
             cboDesignation.ResetText();
+            txtID.Enabled = true;
         }
 
         private void passwordCheckBox_CheckedChanged(object sender, EventArgs e)

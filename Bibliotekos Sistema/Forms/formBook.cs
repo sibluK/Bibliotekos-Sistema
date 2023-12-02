@@ -51,23 +51,27 @@ namespace Bibliotekos_Sistema.Forms
                 txtPubYear.Text = dgvBook.CurrentRow.Cells[4].Value.ToString();
                 txtAcNumber.Text = dgvBook.CurrentRow.Cells[5].Value.ToString();
                 txtCurrNumber.Text = dgvBook.CurrentRow.Cells[6].Value.ToString();
-
             }
+
+            txtISBN.Enabled = false;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             _bookService.saveBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
+            txtISBN.Enabled = true;
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
             _bookService.deleteBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
+            txtISBN.Enabled = true;
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
             _bookService.editBookInfo(dgvBook, cboCategory, cboPublisher, txtISBN, txtTitle, txtPubYear, txtAcNumber, txtCurrNumber);
+            txtISBN.Enabled = true;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -79,6 +83,7 @@ namespace Bibliotekos_Sistema.Forms
             txtCurrNumber.Clear();
             cboPublisher.ResetText();
             cboCategory.ResetText();
+            txtISBN.Enabled = true;
         }
 
         //// NAVIGATION ////

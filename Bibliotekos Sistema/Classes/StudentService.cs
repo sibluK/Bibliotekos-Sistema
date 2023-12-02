@@ -108,8 +108,8 @@ namespace Bibliotekos_Sistema.Classes
                     }
                     else
                     {
-                        sql = $"INSERT INTO tblStudentDetail(Stud_ID,Full_Name,Gender,Date_Of_Birth,Department,Phone_Number)" +
-                              $"VALUES('{txtStudentID.Text}','{txtFullName.Text}','{cboGender.Text}','{mtbDateOfBirth.Text}','{cboDepartment.Text}','{txtPhone.Text}')";
+                        sql = $"INSERT INTO tblStudentDetail(Stud_ID,Full_Name,Gender,Date_Of_Birth,Department,Phone_Number,Registered_By)" +
+                              $"VALUES('{txtStudentID.Text}','{txtFullName.Text}','{cboGender.Text}','{mtbDateOfBirth.Text}','{cboDepartment.Text}','{txtPhone.Text}','{1}')";
                         _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
