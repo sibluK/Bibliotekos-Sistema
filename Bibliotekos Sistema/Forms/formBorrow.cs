@@ -31,6 +31,45 @@ namespace Bibliotekos_Sistema.Forms
             _borrowService.loadBorrowsIntoTable(dgvBorrows);
         }
 
+        private void dgvBorrows_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                txtBorrowID.Text = dgvBorrows.CurrentRow.Cells[0].Value.ToString();
+                txtISBN.Text = dgvBorrows.CurrentRow.Cells[1].Value.ToString();
+                txtStudentID.Text = dgvBorrows.CurrentRow.Cells[2].Value.ToString();
+                mtbBorrowDate.Text = dgvBorrows.CurrentRow.Cells[3].Value.ToString();
+                mtbReturnDate.Text = dgvBorrows.CurrentRow.Cells[4].Value.ToString();
+                txtIssuerID.Text = dgvBorrows.CurrentRow.Cells[5].Value.ToString();
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            _borrowService.saveBorrowInfo(dgvBorrows, txtBorrowID, txtISBN, txtStudentID, mtbBorrowDate, mtbReturnDate, txtIssuerID);
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            _borrowService.DeleteBorrowInfo(dgvBorrows, txtBorrowID, txtISBN, txtStudentID, mtbBorrowDate, mtbReturnDate, txtIssuerID);
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            _borrowService.EditBorrowInfo(dgvBorrows, txtBorrowID, txtISBN, txtStudentID, mtbBorrowDate, mtbReturnDate, txtIssuerID);
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtBorrowID.Clear();
+            txtISBN.Clear();
+            txtStudentID.Clear();
+            mtbBorrowDate.Clear();
+            mtbReturnDate.Clear();
+            txtIssuerID.Clear();
+        }
+
+
         //NAVIGATION//
         private void btnHome_Click(object sender, EventArgs e)
         {
