@@ -17,15 +17,31 @@ namespace Bibliotekos_Sistema.Forms
 {
     public partial class formPublisher : Form
     {
-        private readonly IDatabaseOperations _databaseOperations;
         private readonly PublisherService _publisherService;
         private readonly PageLoader _pageLoader;
-        public formPublisher(IDatabaseOperations databaseOperations)
+        private readonly IDatabaseOperations _databaseOperations;
+        private readonly IAccountDatabase _accountDatabase;
+        private readonly IBookDatabase _bookDatabase;
+        private readonly IBorrowDatabase _borrowDatabase;
+        private readonly ICategoryDatabase _categoryDatabase;
+        private readonly IPublisherDatabase _publisherDatabase;
+        private readonly IStudentDatabase _studentDatabase;
+        private readonly IUserDatabase _userDatabase;
+
+        public formPublisher(IDatabaseOperations databaseOperations, IAccountDatabase accountDatabase, IBookDatabase bookDatabase, IBorrowDatabase borrowDatabase, ICategoryDatabase categoryDatabase, IPublisherDatabase publisherDatabase, IStudentDatabase studentDatabase, IUserDatabase userDatabase)
         {
             InitializeComponent();
             _databaseOperations = databaseOperations;
-            _publisherService = new PublisherService(_databaseOperations);
-            _pageLoader = new PageLoader();
+            _accountDatabase = accountDatabase;
+            _bookDatabase = bookDatabase;
+            _borrowDatabase = borrowDatabase;
+            _categoryDatabase = categoryDatabase;
+            _publisherDatabase = publisherDatabase;
+            _studentDatabase = studentDatabase;
+            _userDatabase = userDatabase;
+            _publisherService = new PublisherService(_publisherDatabase);
+            _pageLoader = new PageLoader(_accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
+
         }
 
         private void formPublisher_Load(object sender, EventArgs e)

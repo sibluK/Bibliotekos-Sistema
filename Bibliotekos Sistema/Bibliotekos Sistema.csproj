@@ -46,21 +46,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\Account.cs" />
-    <Compile Include="Classes\AccountService.cs" />
-    <Compile Include="Classes\Book.cs" />
-    <Compile Include="Classes\BookService.cs" />
-    <Compile Include="Classes\BorrowService.cs" />
-    <Compile Include="Classes\Category.cs" />
-    <Compile Include="Classes\CategoryService.cs" />
+    <Compile Include="Classes\Models\Account.cs" />
+    <Compile Include="Classes\Services\AccountService.cs" />
+    <Compile Include="Classes\Models\Book.cs" />
+    <Compile Include="Classes\Services\BookService.cs" />
+    <Compile Include="Classes\Services\BorrowService.cs" />
+    <Compile Include="Classes\Models\Category.cs" />
+    <Compile Include="Classes\Services\CategoryService.cs" />
     <Compile Include="Classes\PageLoader.cs" />
-    <Compile Include="Classes\Publisher.cs" />
-    <Compile Include="Classes\PublisherService.cs" />
-    <Compile Include="Classes\Student.cs" />
-    <Compile Include="Classes\StudentService.cs" />
-    <Compile Include="Classes\User.cs" />
-    <Compile Include="Classes\UserService.cs" />
+    <Compile Include="Classes\Models\Publisher.cs" />
+    <Compile Include="Classes\Services\PublisherService.cs" />
+    <Compile Include="Classes\Models\Student.cs" />
+    <Compile Include="Classes\Services\StudentService.cs" />
+    <Compile Include="Classes\Models\User.cs" />
+    <Compile Include="Classes\Services\UserService.cs" />
+    <Compile Include="Database\AccountDatabase.cs" />
+    <Compile Include="Database\BookDatabase.cs" />
+    <Compile Include="Database\BorrowDatabase.cs" />
+    <Compile Include="Database\CategoryDatabase.cs" />
     <Compile Include="Database\DBConnection.cs" />
+    <Compile Include="Database\PublisherDatabase.cs" />
+    <Compile Include="Database\StudentDatabase.cs" />
+    <Compile Include="Database\UserDatabase.cs" />
     <Compile Include="Forms\formAccount.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +116,9 @@
     <Compile Include="Forms\formSignup.Designer.cs">
       <DependentUpon>formSignup.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IBookDatabase.cs" />
+    <Compile Include="Interfaces\IBorrowDatabase.cs" />
+    <Compile Include="Interfaces\ICategoryDatabase.cs" />
     <Compile Include="Interfaces\IDatabaseOperations.cs" />
     <Compile Include="formLogin.cs">
       <SubType>Form</SubType>
@@ -116,6 +126,10 @@
     <Compile Include="formLogin.Designer.cs">
       <DependentUpon>formLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IAccountDatabase.cs" />
+    <Compile Include="Interfaces\IPublisherDatabase.cs" />
+    <Compile Include="Interfaces\IStudentDatabase.cs" />
+    <Compile Include="Interfaces\IUserDatabase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\formAccount.resx">

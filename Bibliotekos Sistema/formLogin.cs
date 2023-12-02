@@ -23,16 +23,31 @@ namespace Bibliotekos_Sistema
         Font MediumFont = new Font("Microsoft Sans Serif", 12);
         Font LargeFont = new Font("Microsoft Sans Serif", 28);
 
-        private readonly IDatabaseOperations _databaseOperations;
         private readonly PageLoader _pageLoader;
         private readonly UserService _userService;
+        private readonly IDatabaseOperations _databaseOperations;
+        private readonly IAccountDatabase _accountDatabase;
+        private readonly IBookDatabase _bookDatabase;
+        private readonly IBorrowDatabase _borrowDatabase;
+        private readonly ICategoryDatabase _categoryDatabase;
+        private readonly IPublisherDatabase _publisherDatabase;
+        private readonly IStudentDatabase _studentDatabase;
+        private readonly IUserDatabase _userDatabase;
 
-        public formLogin(IDatabaseOperations databaseOperations)
+
+        public formLogin(IDatabaseOperations databaseOperations, IAccountDatabase accountDatabase, IBookDatabase bookDatabase, IBorrowDatabase borrowDatabase, ICategoryDatabase categoryDatabase, IPublisherDatabase publisherDatabase, IStudentDatabase studentDatabase, IUserDatabase userDatabase)
         {
             InitializeComponent();
             _databaseOperations = databaseOperations;
-            _pageLoader = new PageLoader();
-            _userService = new UserService(_databaseOperations);
+            _accountDatabase = accountDatabase;
+            _bookDatabase = bookDatabase;
+            _borrowDatabase = borrowDatabase;
+            _categoryDatabase = categoryDatabase;
+            _publisherDatabase = publisherDatabase;
+            _studentDatabase = studentDatabase;
+            _userDatabase = userDatabase;
+            _pageLoader = new PageLoader(_accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
+            _userService = new UserService(_userDatabase);
 
         }
         private void Login_Load(object sender, EventArgs e)

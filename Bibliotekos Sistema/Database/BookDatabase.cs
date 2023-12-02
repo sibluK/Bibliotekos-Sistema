@@ -8,21 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Bibliotekos_Sistema.Classes
+namespace Bibliotekos_Sistema.Database
 {
-    public class BookService
+    public class BookDatabase : IBookDatabase
     {
         private readonly SqlCommand _command;
         private string sql;
         private readonly IDatabaseOperations _databaseOperations;
 
-        public BookService(IDatabaseOperations databaseOperations)
+        public BookDatabase(IDatabaseOperations databaseOperations)
         {
             _databaseOperations = databaseOperations;
             _command = new SqlCommand();
         }
 
-        public int totalBook()
+        public int GetTotalBooks()
         {
             SqlDataReader DR;
             int counter = 0;
@@ -59,7 +59,7 @@ namespace Bibliotekos_Sistema.Classes
             return counter;
         }
 
-        public void loadBooksIntoTable(DataGridView DataGridView)
+        public void LoadBooksIntoTable(DataGridView DataGridView)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
@@ -93,7 +93,7 @@ namespace Bibliotekos_Sistema.Classes
             }
         }
 
-        public void saveBookInfo(DataGridView dgvBook, ComboBox cboCategory, ComboBox cboPublisher, TextBox txtISBN, TextBox txtTitle, TextBox txtPubYear, TextBox txtAcNumber, TextBox txtCurrNumber)
+        public void SaveBookInfo(DataGridView dgvBook, ComboBox cboCategory, ComboBox cboPublisher, TextBox txtISBN, TextBox txtTitle, TextBox txtPubYear, TextBox txtAcNumber, TextBox txtCurrNumber)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
@@ -169,7 +169,7 @@ namespace Bibliotekos_Sistema.Classes
             }
         }
 
-        public void deleteBookInfo(DataGridView dgvBook, ComboBox cboCategory, ComboBox cboPublisher, TextBox txtISBN, TextBox txtTitle, TextBox txtPubYear, TextBox txtAcNumber, TextBox txtCurrNumber)
+        public void DeleteBookInfo(DataGridView dgvBook, ComboBox cboCategory, ComboBox cboPublisher, TextBox txtISBN, TextBox txtTitle, TextBox txtPubYear, TextBox txtAcNumber, TextBox txtCurrNumber)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
@@ -219,7 +219,7 @@ namespace Bibliotekos_Sistema.Classes
             }
         }
 
-        public void editBookInfo(DataGridView dgvBook, ComboBox cboCategory, ComboBox cboPublisher, TextBox txtISBN, TextBox txtTitle, TextBox txtPubYear, TextBox txtAcNumber, TextBox txtCurrNumber)
+        public void EditBookInfo(DataGridView dgvBook, ComboBox cboCategory, ComboBox cboPublisher, TextBox txtISBN, TextBox txtTitle, TextBox txtPubYear, TextBox txtAcNumber, TextBox txtCurrNumber)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
@@ -300,5 +300,6 @@ namespace Bibliotekos_Sistema.Classes
                 _databaseOperations.GetConnection().Close();
             }
         }
+
     }
 }

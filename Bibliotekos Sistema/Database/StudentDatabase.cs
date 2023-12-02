@@ -8,21 +8,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Bibliotekos_Sistema.Classes
+namespace Bibliotekos_Sistema.Database
 {
-    public class StudentService
+    public class StudentDatabase : IStudentDatabase
     {
         private readonly SqlCommand _command;
         private string sql;
         private readonly IDatabaseOperations _databaseOperations;
 
-        public StudentService(IDatabaseOperations databaseOperations)
+        public StudentDatabase(IDatabaseOperations databaseOperations)
         {
             _databaseOperations = databaseOperations;
             _command = new SqlCommand();
         }
 
-        public int totalStudents()
+        public int GetTotalStudents()
         {
             SqlDataReader DR;
             int counter = 0;
@@ -59,7 +59,7 @@ namespace Bibliotekos_Sistema.Classes
             return counter;
         }
 
-        public void loadStudentsIntoTable(DataGridView dgvStudent)
+        public void LoadStudentsIntoTable(DataGridView dgvStudent)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
@@ -91,7 +91,7 @@ namespace Bibliotekos_Sistema.Classes
             }
         }
 
-        public void saveStudentInfo(DataGridView dgvStudent, TextBox txtFullName, TextBox txtPhone, TextBox txtStudentID, ComboBox cboDepartment, ComboBox cboGender, MaskedTextBox mtbDateOfBirth)
+        public void SaveStudentInfo(DataGridView dgvStudent, TextBox txtFullName, TextBox txtPhone, TextBox txtStudentID, ComboBox cboDepartment, ComboBox cboGender, MaskedTextBox mtbDateOfBirth)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
@@ -148,7 +148,7 @@ namespace Bibliotekos_Sistema.Classes
             }
         }
 
-        public void deleteStudentInfo(DataGridView dgvStudent, TextBox txtFullName, TextBox txtPhone, TextBox txtStudentID, ComboBox cboDepartment, ComboBox cboGender, MaskedTextBox mtbDateOfBirth)
+        public void DeleteStudentInfo(DataGridView dgvStudent, TextBox txtFullName, TextBox txtPhone, TextBox txtStudentID, ComboBox cboDepartment, ComboBox cboGender, MaskedTextBox mtbDateOfBirth)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
@@ -204,7 +204,7 @@ namespace Bibliotekos_Sistema.Classes
             }
         }
 
-        public void editStudentInfo(DataGridView dgvStudent, TextBox txtFullName, TextBox txtPhone, TextBox txtStudentID, ComboBox cboDepartment, ComboBox cboGender, MaskedTextBox mtbDateOfBirth)
+        public void EditStudentInfo(DataGridView dgvStudent, TextBox txtFullName, TextBox txtPhone, TextBox txtStudentID, ComboBox cboDepartment, ComboBox cboGender, MaskedTextBox mtbDateOfBirth)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();

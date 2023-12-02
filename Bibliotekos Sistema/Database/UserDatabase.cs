@@ -8,22 +8,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Bibliotekos_Sistema.Classes
+namespace Bibliotekos_Sistema.Database
 {
-    public class UserService
+    public class UserDatabase : IUserDatabase
     {
         private readonly IDatabaseOperations _databaseOperations;
         private readonly SqlCommand _command;
         private string sql;
         private int userType;
 
-        public UserService(IDatabaseOperations databaseOperations)
+        public UserDatabase(IDatabaseOperations databaseOperations)
         {
             _databaseOperations = databaseOperations;
             _command = new SqlCommand();
         }
-  
-        public bool authenticateUser(string username, string password)
+
+        public bool AuthenticateUser(string username, string password)
         {
             SqlDataReader DR;
             bool user = false;
@@ -79,7 +79,7 @@ namespace Bibliotekos_Sistema.Classes
             return user;
         }
 
-        public void insertUserIntoDatabase(ComboBox cboUserType, TextBox txtUsername, TextBox txtFullName, TextBox txtPassword, TextBox txtPasswordConfirm, ComboBox cboDesignation)
+        public void InsertUserIntoDatabase(ComboBox cboUserType, TextBox txtUsername, TextBox txtFullName, TextBox txtPassword, TextBox txtPasswordConfirm, ComboBox cboDesignation)
         {
             userType = cboUserType.Text == "Administratorius" ? 1 : 0;
             try

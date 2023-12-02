@@ -8,73 +8,38 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Bibliotekos_Sistema.Classes
+namespace Bibliotekos_Sistema.Database
 {
-    public class CategoryService
+    public class BorrowDatabase : IBorrowDatabase
     {
         private readonly SqlCommand _command;
         private string sql;
         private readonly IDatabaseOperations _databaseOperations;
 
-        public CategoryService(IDatabaseOperations databaseOperations)
+        public BorrowDatabase(IDatabaseOperations databaseOperations)
         {
             _databaseOperations = databaseOperations;
             _command = new SqlCommand();
         }
 
-        public int totalCategory()
-        {
-            SqlDataReader DR;
-            int counter = 0;
-            try
-            {
-                SqlConnection sqlConnection = _databaseOperations.GetConnection();
-                sqlConnection.Open();
-                if (sqlConnection.State == ConnectionState.Open)
-                {
-                    sql = "SELECT * FROM tblCategory";
-                    _command.Connection = sqlConnection;
-                    _command.CommandText = sql;
-                    DR = _command.ExecuteReader();
-                    while (DR.Read())
-                    {
-                        counter++;
-                    }
-                    DR.Close();
-                }
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                _databaseOperations.GetConnection().Close();
-            }
-
-            return counter;
-        }
-
-        public void loadCategoriesIntoTable(DataGridView dgvCategory)
+        public void LoadBorrowsIntoTable(DataGridView DataGridView)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
+
             try
             {
                 SqlConnection sqlConnection = _databaseOperations.GetConnection();
                 sqlConnection.Open();
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    sql = "SELECT * FROM tblCategory";
+                    sql = "SELECT * FROM tblBorrowDetail";
                     _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DA.SelectCommand = _command;
                     DA.Fill(DT);
-                    dgvCategory.DataSource = DT;
+                    DataGridView.DataSource = DT;
+
                 }
             }
             catch (SqlException ex)
@@ -91,42 +56,7 @@ namespace Bibliotekos_Sistema.Classes
             }
         }
 
-        public void loadCategoryIntoComboBox(ComboBox ComboBox)
-        {
-            SqlDataReader DR;
-
-            try
-            {
-                SqlConnection sqlConnection = _databaseOperations.GetConnection();
-                sqlConnection.Open();
-                if (sqlConnection.State == ConnectionState.Open)
-                {
-                    sql = "SELECT * FROM tblCategory";
-                    _command.Connection = sqlConnection;
-                    _command.CommandText = sql;
-                    DR = _command.ExecuteReader();
-                    while (DR.Read())
-                    {
-                        ComboBox.Items.Add(DR.GetValue(1).ToString());
-                    }
-                    DR.Close();
-                }
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                _databaseOperations.GetConnection().Close();
-            }
-        }
-
-        public void saveCategoryInfo(DataGridView dgvCategory, TextBox txtCategoryName, TextBox txtCategoryID)
+        public void SaveBorrowInfo(DataGridView dgvBorrows, TextBox txtBorrowID, TextBox txtISBN, TextBox txtStudentID, MaskedTextBox mtbBorrowDate, MaskedTextBox mtbReturnDate, TextBox txtIssuerID)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
@@ -137,30 +67,38 @@ namespace Bibliotekos_Sistema.Classes
                 sqlConnection.Open();
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    if (txtCategoryName.Text.Length == 0)
+                    if (txtISBN.Text.Length == 0
+                        || txtStudentID.Text.Length == 0
+                        || mtbBorrowDate.Text.Length == 0
+                        || mtbReturnDate.Text.Length == 0
+                        || txtIssuerID.Text.Length == 0)
                     {
-                        MessageBox.Show("Įveskite kategoriją!");
+                        MessageBox.Show("Įveskite vieną ar daugiau laukų!");
                     }
                     else
                     {
-                        sql = $"INSERT INTO tblCategory(Category_Name)" +
-                              $"VALUES('{txtCategoryName.Text}')";
+                        sql = $"INSERT INTO tblBorrowDetail(ISBN,Stud_ID,BorrowDate,Actual_Return_Date,Issued_By)" +
+                              $" VALUES('{txtISBN.Text}','{txtStudentID.Text}','{mtbBorrowDate.Text}','{mtbReturnDate.Text}','{txtIssuerID.Text}')";
                         _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
-                            MessageBox.Show("Kategorija sėkmingai pridėta");
-                            txtCategoryName.Clear();
-                            txtCategoryID.Clear();
-                            sql = "SELECT * FROM tblCategory";
+                            MessageBox.Show("Knyga išduoda sėkmingai!");
+                            txtBorrowID.Clear();
+                            txtISBN.Clear();
+                            txtStudentID.Clear();
+                            mtbBorrowDate.Clear();
+                            mtbReturnDate.Clear();
+                            txtIssuerID.Clear();
+                            sql = "SELECT * FROM tblBorrowDetail";
                             _command.CommandText = sql;
                             DA.SelectCommand = _command;
                             DA.Fill(DT);
-                            dgvCategory.DataSource = DT;
+                            dgvBorrows.DataSource = DT;
                         }
                         else
                         {
-                            MessageBox.Show("Kategorijos pridėti nepavyko!");
+                            MessageBox.Show("Nepavyko išduoti knygos!");
                         }
                     }
                 }
@@ -179,40 +117,43 @@ namespace Bibliotekos_Sistema.Classes
             }
         }
 
-        public void deleteCategoryInfo(DataGridView dgvCategory, TextBox txtCategoryName, TextBox txtCategoryID)
+        public void DeleteBorrowInfo(DataGridView dgvBorrows, TextBox txtBorrowID, TextBox txtISBN, TextBox txtStudentID, MaskedTextBox mtbBorrowDate, MaskedTextBox mtbReturnDate, TextBox txtIssuerID)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
-
             try
             {
                 SqlConnection sqlConnection = _databaseOperations.GetConnection();
                 sqlConnection.Open();
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    if (txtCategoryName.Text.Length == 0)
+                    if (txtBorrowID.Text.Length == 0)
                     {
-                        MessageBox.Show("Pasirinkite kategoriją!");
+                        MessageBox.Show("Pasirinkite išdavimą!");
                     }
                     else
                     {
-                        sql = $"DELETE FROM tblCategory WHERE Category_ID='{int.Parse(txtCategoryID.Text)}'";
+                        sql = $"DELETE FROM tblBorrowDetail WHERE Borrow_ID='{int.Parse(txtBorrowID.Text)}'";
                         _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
-                            MessageBox.Show("Kategorija sėkmingai ištrinta");
-                            txtCategoryID.Clear();
-                            txtCategoryName.Clear();
-                            sql = "SELECT * FROM tblCategory";
+                            MessageBox.Show("Išdavimas sėkmingai panaikintas");
+                            txtBorrowID.Clear();
+                            txtISBN.Clear();
+                            txtStudentID.Clear();
+                            mtbBorrowDate.Clear();
+                            mtbReturnDate.Clear();
+                            txtIssuerID.Clear();
+                            sql = "SELECT * FROM tblBorrowDetail";
                             _command.CommandText = sql;
                             DA.SelectCommand = _command;
                             DA.Fill(DT);
-                            dgvCategory.DataSource = DT;
+                            dgvBorrows.DataSource = DT;
                         }
                         else
                         {
-                            MessageBox.Show("Nepavyko ištrinti kategorijos!");
+                            MessageBox.Show("Nepavyko ištrinto išdavimo!");
                         }
                     }
                 }
@@ -231,7 +172,7 @@ namespace Bibliotekos_Sistema.Classes
             }
         }
 
-        public void editCategoryInfo(DataGridView dgvCategory, TextBox txtCategoryName, TextBox txtCategoryID)
+        public void EditBorrowInfo(DataGridView dgvBorrows, TextBox txtBorrowID, TextBox txtISBN, TextBox txtStudentID, MaskedTextBox mtbBorrowDate, MaskedTextBox mtbReturnDate, TextBox txtIssuerID)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
@@ -242,30 +183,38 @@ namespace Bibliotekos_Sistema.Classes
                 sqlConnection.Open();
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-
-                    if (txtCategoryID.Text.Length == 0 || txtCategoryName.Text.Length == 0)
+                    if (txtISBN.Text.Length == 0
+                        || txtStudentID.Text.Length == 0
+                        || mtbBorrowDate.Text.Length == 0
+                        || mtbReturnDate.Text.Length == 0
+                        || txtIssuerID.Text.Length == 0)
                     {
-                        MessageBox.Show("Vienas ar daugiau laukų yra privalomi!");
+                        MessageBox.Show("Įveskite vieną ar daugiau laukų!");
                     }
                     else
                     {
-                        sql = $"UPDATE tblCategory SET Category_Name='{txtCategoryName.Text}' WHERE Category_ID='{int.Parse(txtCategoryID.Text)}'";
+                        sql = $"UPDATE tblBorrowDetail SET ISBN='{txtISBN.Text}', Stud_ID='{txtStudentID.Text}'," +
+                              $" Borrow_Date='{mtbBorrowDate.Text}', Actual_Return_Date='{mtbReturnDate.Text}', Issued_By='{txtIssuerID.Text}' WHERE Borrow_ID={int.Parse(txtBorrowID.Text)}";
                         _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
-                            MessageBox.Show("Kategorija sėkmingai atnaujinta!");
-                            txtCategoryID.Clear();
-                            txtCategoryName.Clear();
-                            sql = "SELECT * FROM tblCategory";
+                            MessageBox.Show("Išdavimas sėkmingai atnaujintas!");
+                            txtBorrowID.Clear();
+                            txtISBN.Clear();
+                            txtStudentID.Clear();
+                            mtbBorrowDate.Clear();
+                            mtbReturnDate.Clear();
+                            txtIssuerID.Clear();
+                            sql = "SELECT * FROM tblBorrowDetail";
                             _command.CommandText = sql;
                             DA.SelectCommand = _command;
                             DA.Fill(DT);
-                            dgvCategory.DataSource = DT;
+                            dgvBorrows.DataSource = DT;
                         }
                         else
                         {
-                            MessageBox.Show("Nepavyko atnaujinti kategorijos!");
+                            MessageBox.Show("Nepavyko atnaujinto išdavimo!");
                         }
                     }
                 }

@@ -1,28 +1,29 @@
 ﻿using Bibliotekos_Sistema.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Bibliotekos_Sistema.Classes
+namespace Bibliotekos_Sistema.Database
 {
-    public class PublisherService
+    public class AccountDatabase : IAccountDatabase
     {
+        private readonly IDatabaseOperations _databaseOperations;
         private readonly SqlCommand _command;
         private string sql;
-        private readonly IDatabaseOperations _databaseOperations;
+        private int userType = 0;
 
-        public PublisherService(IDatabaseOperations databaseOperations)
+        public AccountDatabase(IDatabaseOperations databaseOperations)
         {
             _databaseOperations = databaseOperations;
             _command = new SqlCommand();
         }
 
-        public int totalPublisher()
+        public int GetTotalAccounts()
         {
             SqlDataReader DR;
             int counter = 0;
@@ -32,7 +33,7 @@ namespace Bibliotekos_Sistema.Classes
                 sqlConnection.Open();
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    sql = "SELECT * FROM tblBindingDetail";
+                    sql = "SELECT * FROM tblStaff";
                     _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DR = _command.ExecuteReader();
@@ -58,57 +59,24 @@ namespace Bibliotekos_Sistema.Classes
 
             return counter;
         }
-        public void loadPublisherIntoComboBox(ComboBox ComboBox)
-        {
-            SqlDataReader DR;
 
-            try
-            {
-                SqlConnection sqlConnection = _databaseOperations.GetConnection();
-                sqlConnection.Open();
-                if (sqlConnection.State == ConnectionState.Open)
-                {
-                    sql = "SELECT * FROM tblBindingDetail";
-                    _command.Connection = sqlConnection;
-                    _command.CommandText = sql;
-                    DR = _command.ExecuteReader();
-                    while (DR.Read())
-                    {
-                        ComboBox.Items.Add(DR.GetValue(1).ToString());
-                    }
-                    DR.Close();
-                }
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                _databaseOperations.GetConnection().Close();
-            }
-        }
-
-        public void loadPublishersIntoTable(DataGridView dgvPublisher)
+        public void LoadAccountsIntoTable(DataGridView DataGridView)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
+
             try
             {
                 SqlConnection sqlConnection = _databaseOperations.GetConnection();
                 sqlConnection.Open();
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    sql = "SELECT * FROM tblBindingDetail";
+                    sql = "SELECT * FROM tblStaff";
                     _command.Connection = sqlConnection;
                     _command.CommandText = sql;
                     DA.SelectCommand = _command;
                     DA.Fill(DT);
-                    dgvPublisher.DataSource = DT;
+                    DataGridView.DataSource = DT;
                 }
             }
             catch (SqlException ex)
@@ -125,7 +93,137 @@ namespace Bibliotekos_Sistema.Classes
             }
         }
 
-        public void savePublisherInfo(DataGridView dgvPublisher, TextBox txtPublisherName, TextBox txtPublisherID)
+        public void SaveAccountInfo(DataGridView dgvAccount, TextBox txtID, TextBox txtUsername, TextBox txtFullName, TextBox txtPassword, TextBox txtPasswordConfirm, ComboBox cboUserType, ComboBox cboDesignation)
+        {
+            SqlDataAdapter DA = new SqlDataAdapter();
+            DataTable DT = new DataTable();
+
+            userType = cboUserType.Text == "Administratorius" ? 1 : 0;
+
+
+            try
+            {
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    if (txtUsername.Text.Length == 0
+                        || txtFullName.Text.Length == 0
+                        || txtPassword.Text.Length == 0
+                        || txtPasswordConfirm.Text.Length == 0)
+                    {
+                        MessageBox.Show("Įveskite vieną ar daugiau laukų!");
+                    }
+                    else if (txtUsername.Text.Length < 3
+                            || txtPassword.Text.Length < 3
+                            || txtPasswordConfirm.Text.Length < 3)
+                    {
+                        MessageBox.Show("Netinkamai įvesti duomenys. Prisijungimo vardas ir slaptažodis turi būti bent 3 raidžių!");
+                    }
+                    else if (txtPassword.Text != txtPasswordConfirm.Text)
+                    {
+                        MessageBox.Show("Slaptažodžiai nesutampa. Pažiurėkite ar gerai įvedėte slaptažodį!");
+                    }
+                    else
+                    {
+                        sql = $"INSERT INTO tblStaff(FullName,Username,SPassword,is_Admin,Designation)" +
+                              $" VALUES('{txtFullName.Text}','{txtUsername.Text}','{txtPassword.Text}','{userType}','{cboDesignation.Text}')";
+                        _command.Connection = sqlConnection;
+                        _command.CommandText = sql;
+                        if (_command.ExecuteNonQuery() > 0)
+                        {
+                            MessageBox.Show("Naudotojas sėkmingai pridetėtas");
+                            txtID.Clear();
+                            txtFullName.Clear();
+                            txtUsername.Clear();
+                            txtPassword.Clear();
+                            txtPasswordConfirm.Clear();
+                            cboDesignation.ResetText();
+                            cboUserType.ResetText();
+                            sql = "SELECT * FROM tblStaff";
+                            _command.CommandText = sql;
+                            DA.SelectCommand = _command;
+                            DA.Fill(DT);
+                            dgvAccount.DataSource = DT;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nepavyko pridėti naudotojo!");
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                _databaseOperations.GetConnection().Close();
+            }
+        }
+
+        public void DeleteAccountInfo(DataGridView dgvAccount, TextBox txtID, TextBox txtUsername, TextBox txtFullName, TextBox txtPassword, TextBox txtPasswordConfirm, ComboBox cboUserType, ComboBox cboDesignation)
+        {
+            SqlDataAdapter DA = new SqlDataAdapter();
+            DataTable DT = new DataTable();
+            try
+            {
+                SqlConnection sqlConnection = _databaseOperations.GetConnection();
+                sqlConnection.Open();
+                if (sqlConnection.State == ConnectionState.Open)
+                {
+                    if (txtID.Text.Length == 0)
+                    {
+                        MessageBox.Show("Pasirinkite naudotoją!");
+                    }
+                    else
+                    {
+                        sql = $"DELETE FROM tblStaff WHERE Staff_Member_ID='{txtID.Text}'";
+                        _command.Connection = sqlConnection;
+                        _command.CommandText = sql;
+                        if (_command.ExecuteNonQuery() > 0)
+                        {
+                            MessageBox.Show("Naudotojas sėkmingai ištrintas");
+                            txtID.Clear();
+                            txtUsername.Clear();
+                            txtFullName.Clear();
+                            txtPassword.Clear();
+                            txtPasswordConfirm.Clear();
+                            cboUserType.ResetText();
+                            cboDesignation.ResetText();
+                            sql = "SELECT * FROM tblStaff";
+                            _command.CommandText = sql;
+                            DA.SelectCommand = _command;
+                            DA.Fill(DT);
+                            dgvAccount.DataSource = DT;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nepavyko ištrinto naudotojo!");
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                _databaseOperations.GetConnection().Close();
+            }
+        }
+
+        public void EditAccountInfo(DataGridView dgvAccount, TextBox txtID, TextBox txtUsername, TextBox txtFullName, TextBox txtPassword, TextBox txtPasswordConfirm, ComboBox cboUserType, ComboBox cboDesignation)
         {
             SqlDataAdapter DA = new SqlDataAdapter();
             DataTable DT = new DataTable();
@@ -136,30 +234,48 @@ namespace Bibliotekos_Sistema.Classes
                 sqlConnection.Open();
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    if (txtPublisherName.Text.Length == 0)
+                    if (txtUsername.Text.Length == 0
+                        || txtFullName.Text.Length == 0
+                        || txtPassword.Text.Length == 0
+                        || txtPasswordConfirm.Text.Length == 0)
                     {
-                        MessageBox.Show("Įveskite leidėją!");
+                        MessageBox.Show("Įveskite vieną ar daugiau laukų!");
+                    }
+                    else if (txtUsername.Text.Length < 3
+                            || txtPassword.Text.Length < 3
+                            || txtPasswordConfirm.Text.Length < 3)
+                    {
+                        MessageBox.Show("Netinkamai įvesti duomenys. Prisijungimo vardas ir slaptažodis turi būti bent 3 raidžių!");
+                    }
+                    else if (txtPassword.Text != txtPasswordConfirm.Text)
+                    {
+                        MessageBox.Show("Slaptažodžiai nesutampa. Pažiurėkite ar gerai įvedėte slaptažodį!");
                     }
                     else
                     {
-                        sql = $"INSERT INTO tblBindingDetail(Binding_Name)" +
-                              $"VALUES('{txtPublisherName.Text}')";
+                        sql = $"UPDATE tblStaff SET FullName='{txtFullName.Text}', Username='{txtUsername.Text}'," +
+                              $" SPassword='{txtPassword.Text}', Designation='{cboDesignation.Text}' WHERE Staff_Member_ID={int.Parse(txtID.Text)}";
                         _command.Connection = sqlConnection;
                         _command.CommandText = sql;
                         if (_command.ExecuteNonQuery() > 0)
                         {
-                            MessageBox.Show("Leidėjas sėkmingai pridėtas");
-                            txtPublisherID.Clear();
-                            txtPublisherName.Clear();
-                            sql = "SELECT * FROM tblBindingDetail";
+                            MessageBox.Show("Naudotojas sėkmingai atnaujintas!");
+                            txtID.Clear();
+                            txtFullName.Clear();
+                            txtUsername.Clear();
+                            txtPassword.Clear();
+                            txtPasswordConfirm.Clear();
+                            cboDesignation.ResetText();
+                            cboUserType.ResetText();
+                            sql = "SELECT * FROM tblStaff";
                             _command.CommandText = sql;
                             DA.SelectCommand = _command;
                             DA.Fill(DT);
-                            dgvPublisher.DataSource = DT;
+                            dgvAccount.DataSource = DT;
                         }
                         else
                         {
-                            MessageBox.Show("Leidėjo pridėti nepavyko!");
+                            MessageBox.Show("Nepavyko atnaujinto naudotojo!");
                         }
                     }
                 }
@@ -178,109 +294,5 @@ namespace Bibliotekos_Sistema.Classes
             }
         }
 
-        public void editPublisherInfo(DataGridView dgvPublisher, TextBox txtPublisherName, TextBox txtPublisherID)
-        {
-            SqlDataAdapter DA = new SqlDataAdapter();
-            DataTable DT = new DataTable();
-
-            try
-            {
-                SqlConnection sqlConnection = _databaseOperations.GetConnection();
-                sqlConnection.Open();
-                if (sqlConnection.State == ConnectionState.Open)
-                {
-
-                    if (txtPublisherName.Text.Length == 0 || txtPublisherID.Text.Length == 0)
-                    {
-                        MessageBox.Show("Vienas ar daugiau laukų yra privalomi!");
-                    }
-                    else
-                    {
-                        sql = $"UPDATE tblBindingDetail SET Binding_Name='{txtPublisherName.Text}' WHERE Binding_ID='{int.Parse(txtPublisherID.Text)}'";
-                        _command.Connection = sqlConnection;
-                        _command.CommandText = sql;
-                        if (_command.ExecuteNonQuery() > 0)
-                        {
-                            MessageBox.Show("Leidėjas sėkmingai atnaujintas!");
-                            txtPublisherID.Clear();
-                            txtPublisherName.Clear();
-                            sql = "SELECT * FROM tblBindingDetail";
-                            _command.CommandText = sql;
-                            DA.SelectCommand = _command;
-                            DA.Fill(DT);
-                            dgvPublisher.DataSource = DT;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Nepavyko atnaujinti leidėjo!");
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                _databaseOperations.GetConnection().Close();
-            }
-        }
-
-        public void deletePublisherInfo(DataGridView dgvPublisher, TextBox txtPublisherName, TextBox txtPublisherID)
-        {
-            SqlDataAdapter DA = new SqlDataAdapter();
-            DataTable DT = new DataTable();
-
-            try
-            {
-                SqlConnection sqlConnection = _databaseOperations.GetConnection();
-                sqlConnection.Open();
-                if (sqlConnection.State == ConnectionState.Open)
-                {
-                    if (txtPublisherName.Text.Length == 0)
-                    {
-                        MessageBox.Show("Pasirinkite leidėją!");
-                    }
-                    else
-                    {
-                        sql = $"DELETE FROM tblBindingDetail WHERE Binding_ID='{int.Parse(txtPublisherID.Text)}'";
-                        _command.Connection = sqlConnection;
-                        _command.CommandText = sql;
-                        if (_command.ExecuteNonQuery() > 0)
-                        {
-                            MessageBox.Show("Leidėjas sėkmingai ištrintas");
-                            txtPublisherID.Clear();
-                            txtPublisherName.Clear();
-                            sql = "SELECT * FROM tblBindingDetail";
-                            _command.CommandText = sql;
-                            DA.SelectCommand = _command;
-                            DA.Fill(DT);
-                            dgvPublisher.DataSource = DT;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Nepavyko ištrinti leidėjo!");
-                        }
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                _databaseOperations.GetConnection().Close();
-            }
-        }
     }
 }
