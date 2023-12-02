@@ -25,7 +25,6 @@ namespace Bibliotekos_Sistema
 
         private readonly PageLoader _pageLoader;
         private readonly UserService _userService;
-        private readonly IDatabaseOperations _databaseOperations;
         private readonly IAccountDatabase _accountDatabase;
         private readonly IBookDatabase _bookDatabase;
         private readonly IBorrowDatabase _borrowDatabase;
@@ -35,10 +34,9 @@ namespace Bibliotekos_Sistema
         private readonly IUserDatabase _userDatabase;
 
 
-        public formLogin(IDatabaseOperations databaseOperations, IAccountDatabase accountDatabase, IBookDatabase bookDatabase, IBorrowDatabase borrowDatabase, ICategoryDatabase categoryDatabase, IPublisherDatabase publisherDatabase, IStudentDatabase studentDatabase, IUserDatabase userDatabase)
+        public formLogin(IAccountDatabase accountDatabase, IBookDatabase bookDatabase, IBorrowDatabase borrowDatabase, ICategoryDatabase categoryDatabase, IPublisherDatabase publisherDatabase, IStudentDatabase studentDatabase, IUserDatabase userDatabase)
         {
             InitializeComponent();
-            _databaseOperations = databaseOperations;
             _accountDatabase = accountDatabase;
             _bookDatabase = bookDatabase;
             _borrowDatabase = borrowDatabase;

@@ -6,7 +6,6 @@ namespace Bibliotekos_Sistema.Classes
 {
     public class PageLoader
     {
-        IDatabaseOperations databaseOperations = new DBConnection();
         private readonly IAccountDatabase _accountDatabase;
         private readonly IBookDatabase _bookDatabase;
         private readonly IBorrowDatabase _borrowDatabase;
@@ -28,7 +27,7 @@ namespace Bibliotekos_Sistema.Classes
 
         public void loadPublisherPage()
         {
-            formPublisher publisher = new formPublisher(databaseOperations, _accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
+            formPublisher publisher = new formPublisher(_accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
             publisher.Show();
         }
         public void loadAccountPage()
@@ -38,37 +37,37 @@ namespace Bibliotekos_Sistema.Classes
         }
         public void loadBookPage()
         {
-            formBook book = new formBook(databaseOperations, _accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
+            formBook book = new formBook(_accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
             book.Show();
         }
         public void loadCategoryPage()
         {
-            formCategory category = new formCategory(databaseOperations, _accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
+            formCategory category = new formCategory(_accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
             category.Show();
         }
         public void loadStudentPage()
         {
-            formStudent student = new formStudent(databaseOperations, _accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
+            formStudent student = new formStudent(_accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
             student.Show();
         }
         public void loadLoginPage()
         {
-            formLogin login = new formLogin(databaseOperations, _accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
+            formLogin login = new formLogin(_accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
             login.Show();
         }
         public void loadSignupPage()
         {
-            formSignup signup = new formSignup(databaseOperations, _accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
+            formSignup signup = new formSignup(_accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
             signup.Show();
         }
         public void loadDashboardPage()
         {
-            formDashboard dashboard = new formDashboard(databaseOperations, _accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
+            formDashboard dashboard = new formDashboard(_accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
             dashboard.Show();
         }
         public void loadBorrowPage()
         {
-            formBorrow borrow = new formBorrow(databaseOperations, _accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
+            formBorrow borrow = new formBorrow(_accountDatabase, _bookDatabase, _borrowDatabase, _categoryDatabase, _publisherDatabase, _studentDatabase, _userDatabase);
             borrow.Show();
         }
     }

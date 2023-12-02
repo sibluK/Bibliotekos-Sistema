@@ -120,10 +120,10 @@
     <Compile Include="Interfaces\IBorrowDatabase.cs" />
     <Compile Include="Interfaces\ICategoryDatabase.cs" />
     <Compile Include="Interfaces\IDatabaseOperations.cs" />
-    <Compile Include="formLogin.cs">
+    <Compile Include="Forms\formLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="formLogin.Designer.cs">
+    <Compile Include="Forms\formLogin.Designer.cs">
       <DependentUpon>formLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IAccountDatabase.cs" />
@@ -156,7 +156,7 @@
     <EmbeddedResource Include="Forms\formSignup.resx">
       <DependentUpon>formSignup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="formLogin.resx">
+    <EmbeddedResource Include="Forms\formLogin.resx">
       <DependentUpon>formLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
